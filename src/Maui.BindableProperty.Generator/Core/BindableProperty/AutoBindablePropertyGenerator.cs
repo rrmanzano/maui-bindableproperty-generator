@@ -12,7 +12,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
         private const string attributeText = @"
         using System;
-        namespace Maui.BindableProperty.Generator.Core.BindableProperty
+        namespace Maui.BindableProperty.Generator.Core
         {
             [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
             [System.Diagnostics.Conditional(""AutoBindableGenerator_DEBUG"")]

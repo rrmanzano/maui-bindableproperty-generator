@@ -1,4 +1,4 @@
-﻿using Maui.BindableProperty.Generator.Core.BindableProperty;
+﻿using Maui.BindableProperty.Generator.Core;
 
 namespace Maui.BindableProperty.Generator.Demo.Controls
 {
