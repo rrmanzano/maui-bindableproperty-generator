@@ -2,9 +2,13 @@
 
 namespace Maui.BindableProperty.Generator.Demo.Controls
 {
-    public partial class CustomButton: Button
+    public partial class CustomEntry: ContentView
     {
         [AutoBindable]
         private string _placeholder;
+
+
+        [AutoBindable(PropertyName = "Text")]
+        private string _t;
     }
 }

@@ -43,9 +43,9 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var w = new CodeWriter(CodeWriterSettings.CSharpDefault);
             using (w.B(@$"namespace {namespaceName}"))
             {
+                w._(AutoBindableConstants.AttributeGeneratedCodeString);
                 using (w.B(@$"public partial class {classSymbol.Name}"))
                 {
-
                     // Create properties for each field 
                     foreach (IFieldSymbol fieldSymbol in fields)
                     {
@@ -75,7 +75,9 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             }
 
             var bindablePropertyName = $@"{propertyName}Property";
+            w._(AutoBindableConstants.AttributeGeneratedCodeString);
             w._($@"public static readonly Microsoft.Maui.Controls.BindableProperty {bindablePropertyName} = Microsoft.Maui.Controls.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}), default({fieldType}));");
+            w._(AutoBindableConstants.AttributeGeneratedCodeString);
             using (w.B(@$"public {fieldType} {propertyName}"))
             {
                 w._($@"get => ({fieldType})GetValue({bindablePropertyName});",
