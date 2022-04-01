@@ -14,6 +14,8 @@ PM> Install-Package M.BindableProperty.Generator
 Just decorate field with the Bindable attribute.
 
 ```csharp
+    using Maui.BindableProperty.Generator.Core.BindableProperty;
+
     public partial class CustomEntry : ContentView
     {
         [AutoBindable]
@@ -37,6 +39,8 @@ the prevoius code will generate this:
 Just decorate field with the Bindable attribute.
 
 ```csharp
+    using Maui.BindableProperty.Generator.Core.BindableProperty;
+    
     public partial class CustomEntry : ContentView
     {
         [AutoBindable(PropertyName = "Text")]
