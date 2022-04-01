@@ -33,11 +33,11 @@ the prevoius code will generate this:
 
 ## Project status
 
-- [x] Simple implementation - Done
-- [x] Custom property name - In Progress
-- [-] Custom Parameters - Pending
-- [-] OnChanged method - Pending
-- [-] Dependent properties - Pending
+- ✅ Simple implementation - Done
+- 🔲 Custom property name - In Progress
+- 🔲 Custom Parameters - Pending
+- 🔲 OnChanged method - Pending
+- 🔲 Dependent properties - Pending
 
 ## Extra info
 This repo is using part of the code used in this repo [CodeWriter](https://github.com/SaladLab/CodeWriter "CodeWriter") to generate the string used to create the CSharp files, thanks to the author.
