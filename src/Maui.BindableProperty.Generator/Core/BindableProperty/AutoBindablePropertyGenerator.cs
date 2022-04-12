@@ -21,6 +21,8 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
                 public AutoBindableAttribute(){}
 
                 public string PropertyName { get; set; }
+
+                public string OnChanged { get; set; }
             }
         }";
 
@@ -65,9 +67,15 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
             // Get the AutoNotify attribute from the field, and any associated data
             var attributeData = fieldSymbol.GetAttributes().Single(ad => ad.AttributeClass.Equals(attributeSymbol, SymbolEqualityComparer.Default));
-            var overridenNameOpt = attributeData.NamedArguments.SingleOrDefault(kvp => kvp.Key == "PropertyName").Value;
+            TypedConstant GetValue(string key)
+            {
+                return attributeData.NamedArguments.SingleOrDefault(kvp => kvp.Key == key).Value;
+            }
 
-            var propertyName = this.ChooseName(fieldName, overridenNameOpt);
+            var overridenNameProperty = GetValue("PropertyName");
+            var overridenOnChanged = GetValue("OnChanged");
+
+            var propertyName = this.ChooseName(fieldName, overridenNameProperty);
             if (propertyName?.Length == 0 || propertyName == fieldName)
             {
                 // TODO: issue a diagnostic that we can't process this field
@@ -80,8 +88,20 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             w._(AutoBindableConstants.AttributeGeneratedCodeString);
             using (w.B(@$"public {fieldType} {propertyName}"))
             {
-                w._($@"get => ({fieldType})GetValue({bindablePropertyName});",
-                    $@"set => SetValue({bindablePropertyName}, value);");
+                w._($@"get => ({fieldType})GetValue({bindablePropertyName});");
+                if (!overridenOnChanged.IsNull)
+                {
+                    var method = overridenOnChanged.Value?.ToString();
+                    using (w.B(@$"set"))
+                    {
+                        w._($@"SetValue({bindablePropertyName}, value);",
+                            $@"this.{method}(value);");
+                    }
+                }
+                else
+                {
+                    w._($@"set => SetValue({bindablePropertyName}, value);");
+                }
             }
         }
 

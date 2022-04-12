@@ -8,7 +8,12 @@ namespace Maui.BindableProperty.Generator.Demo.Controls
         private string _placeholder;
 
 
-        [AutoBindable(PropertyName = "Text")]
-        private string _t;
+        [AutoBindable(OnChanged = nameof(OnTextChanged))]
+        private string _text;
+
+        private void OnTextChanged(string newValue)
+        {
+            // Do stuff here
+        }
     }
 }

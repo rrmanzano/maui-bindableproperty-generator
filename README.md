@@ -1,4 +1,4 @@
-[![NuGet](http://img.shields.io/nuget/vpre/M.BindableProperty.Generator.svg?label=NuGet)](https://www.nuget.org/packages/M.BindableProperty.Generator/)
+[![NuGet](http://img.shields.io/nuget/vpre/M.BindableProperty.Generator.svg?label=NuGet)](https://www.nuget.org/packages/M.BindableProperty.Generator/) [![GitHub issues](https://img.shields.io/github/issues/rrmanzano/maui-bindableproperty-generator?style=flat-square)](https://github.com/rrmanzano/maui-bindableproperty-generator/) [![GitHub stars](https://img.shields.io/github/stars/rrmanzano/maui-bindableproperty-generator?style=flat-square)](https://github.com/rrmanzano/maui-bindableproperty-generator/stargazers) ![last commit](https://img.shields.io/github/last-commit/rrmanzano/maui-bindableproperty-generator?style=flat-square)
 
 # Maui.BindableProperty.Generator
 
@@ -60,13 +60,47 @@ the prevoius code will generate this:
     }
 ```
 
+## Usage - OnChanged method 
+Just decorate field with the Bindable attribute. The 'OnChanged' method must have only one parameter (must match the type of the field)
+
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class CustomEntry : ContentView
+    {
+        [AutoBindable(OnChanged = nameof(OnTextChanged))]
+        private string _text;
+
+        private void OnTextChanged(string newValue)
+        { 
+            // Do stuff here
+        }
+    }
+```
+the prevoius code will generate this:
+```csharp
+    public partial class CustomEntry
+    {
+        public static readonly Microsoft.Maui.Controls.BindableProperty TextProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(Text), typeof(string), typeof(CustomEntry), default(string));
+        public string Text
+        {
+            get => (string)GetValue(TextProperty);
+            set =>
+            {
+                SetValue(TextProperty, value);
+                this.OnTextChanged(value);
+            }
+        }
+    }
+```
+
 ## Project status
 
 - ✅ Simple implementation - Done
 - ✅ Custom property name - Done
 - 🔲 Custom Parameters - In Progress
-- 🔲 OnChanged method - Pending
-- 🔲 Dependent properties - Pending
+- ✅ OnChanged method - Done
+- 🔲 Property Accessibility - Pending
 
 ## Extra info
-This repo is using part of the code of this repo [CodeWriter](https://github.com/SaladLab/CodeWriter "CodeWriter") to generate the CSharp files, thanks to the author.
+This repo is using part of the code of [CodeWriter](https://github.com/SaladLab/CodeWriter "CodeWriter") to generate the CSharp files, thanks to the author.
