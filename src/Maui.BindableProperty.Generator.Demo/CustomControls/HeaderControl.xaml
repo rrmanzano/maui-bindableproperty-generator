@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl"
+             x:Name="this">
+    <VerticalStackLayout Spacing="25" Padding="30">
+
+        <Label
+            BindingContext="{x:Reference this}"
+            Text="{Binding H1LabelText}"
+            SemanticProperties.HeadingLevel="Level1"
+            FontSize="32"
+            HorizontalOptions="Center" />
+
+        <Label
+            BindingContext="{x:Reference this}"
+            Text="{Binding H2LabelText}"
+            SemanticProperties.HeadingLevel="Level1"
+            SemanticProperties.Description="Welcome to dot net Multi platform App U I"
+            FontSize="18"
+            HorizontalOptions="Center" />
+
+        <Label
+            BindingContext="{x:Reference this}"
+            Text="{Binding H3LabelText}"
+            FontSize="18"
+            FontAttributes="Bold"
+            x:Name="CounterLabel"
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentView>
