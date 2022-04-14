@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.Text;
 using System.Text;
 using Maui.BindableProperty.Generator.Helpers;
+using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation;
 
 namespace Maui.BindableProperty.Generator.Core.BindableProperty
 {
@@ -9,6 +10,8 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
     [Generator]
     public class AutoBindablePropertyGenerator : ISourceGenerator
     {
+        private TypedConstant NameProperty { get; set; }
+        private readonly List<IImplementation> CustomImplementations = new() { new PropertyChanged() };
 
         private const string attributeText = @"
         using System;
@@ -65,17 +68,9 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var fieldName = fieldSymbol.Name;
             var fieldType = fieldSymbol.Type;
 
-            // Get the AutoNotify attribute from the field, and any associated data
-            var attributeData = fieldSymbol.GetAttributes().Single(ad => ad.AttributeClass.Equals(attributeSymbol, SymbolEqualityComparer.Default));
-            TypedConstant GetValue(string key)
-            {
-                return attributeData.NamedArguments.SingleOrDefault(kvp => kvp.Key == key).Value;
-            }
+            this.InitializeAttrProperties(fieldSymbol, attributeSymbol, classSymbol);
 
-            var overridenNameProperty = GetValue("PropertyName");
-            var overridenOnChanged = GetValue("OnChanged");
-
-            var propertyName = this.ChooseName(fieldName, overridenNameProperty);
+            var propertyName = this.ChooseName(fieldName, this.NameProperty);
             if (propertyName?.Length == 0 || propertyName == fieldName)
             {
                 // TODO: issue a diagnostic that we can't process this field
@@ -83,19 +78,19 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             }
 
             var bindablePropertyName = $@"{propertyName}Property";
+            var customParameters = this.ProcessBindableParameters();
             w._(AutoBindableConstants.AttributeGeneratedCodeString);
-            w._($@"public static readonly Microsoft.Maui.Controls.BindableProperty {bindablePropertyName} = Microsoft.Maui.Controls.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}), default({fieldType}));");
+            w._($@"public static readonly Microsoft.Maui.Controls.BindableProperty {bindablePropertyName} = Microsoft.Maui.Controls.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}), default({fieldType}){customParameters});");
             w._(AutoBindableConstants.AttributeGeneratedCodeString);
             using (w.B(@$"public {fieldType} {propertyName}"))
             {
                 w._($@"get => ({fieldType})GetValue({bindablePropertyName});");
-                if (!overridenOnChanged.IsNull)
+                if (this.ExistsBodySetter())
                 {
-                    var method = overridenOnChanged.Value?.ToString();
                     using (w.B(@$"set"))
                     {
-                        w._($@"SetValue({bindablePropertyName}, value);",
-                            $@"this.{method}(value);");
+                        w._($@"SetValue({bindablePropertyName}, value);");
+                        this.ProcessBodyStter(w);
                     }
                 }
                 else
@@ -103,6 +98,41 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
                     w._($@"set => SetValue({bindablePropertyName}, value);");
                 }
             }
+
+            this.ProcessImplementationLogic(w);
+        }
+
+
+        private void InitializeAttrProperties(IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
+        {
+            this.NameProperty = fieldSymbol.GetTypedConstant(attributeSymbol, "PropertyName");
+            this.CustomImplementations.ForEach(i => i.Initialize(this.NameProperty, fieldSymbol, attributeSymbol, classSymbol));
+        }
+
+        private string ProcessBindableParameters()
+        {
+            var parameters = this.CustomImplementations
+                                    .Select(i => i.ProcessBindableParameters())
+                                    .Where(x => !string.IsNullOrEmpty(x));
+            
+            return parameters.Any() ? $@", { string.Join(", ", parameters) }" : string.Empty;
+        }
+
+        private void ProcessBodyStter(CodeWriter w)
+        {
+            this.CustomImplementations
+                    .ForEach(i => i.ProcessBodyStter(w));
+        }
+
+        private void ProcessImplementationLogic(CodeWriter w)
+        {
+            this.CustomImplementations
+                .ForEach(i => i.ProcessImplementationLogic(w));
+        }
+
+        private bool ExistsBodySetter()
+        {
+            return this.CustomImplementations.Any(i => i.Implemented());
         }
 
         private string ChooseName(string fieldName, TypedConstant overridenNameOpt)
