@@ -5,21 +5,33 @@ namespace Maui.BindableProperty.Generator.Demo.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        private int _count = 0;
+        [ObservableProperty]
+        private string _firstName;
 
         [ObservableProperty]
-        private string _countText;
+        private string _lastName;
 
-        public MainViewModel()
-        {
-            this.CountText = "Count: 0";
-        }
+        [ObservableProperty]
+        private DateTime _birthDate;
+
+        [ObservableProperty]
+        private string _country;
+
+        public MainViewModel(){}
 
         [ICommand]
-        private void CounterClicked()
+        private void SaveClicked()
         {
-            _count += 20;
-            this.CountText = $"Count: {_count}";
+            this.FirstName = null;
+            this.LastName = null;
+            this.Country = null;
+            this.BirthDate = DateTime.Now;
+        }
+
+        partial void OnFirstNameChanged(string value)
+        {
+            System.Diagnostics.Debug.WriteLine("Method OnFirstNameChanged fired");
+            System.Diagnostics.Debug.WriteLine(value);
         }
     }
 }

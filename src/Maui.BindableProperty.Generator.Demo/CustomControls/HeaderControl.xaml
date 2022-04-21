@@ -3,29 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl"
              x:Name="this">
-    <VerticalStackLayout Spacing="25" Padding="30">
 
-        <Label
-            BindingContext="{x:Reference this}"
-            Text="{Binding H1LabelText}"
-            SemanticProperties.HeadingLevel="Level1"
-            FontSize="32"
-            HorizontalOptions="Center" />
+    <ContentView.Resources>
+        <Color x:Key="CtrlBackground">#f6f6f6</Color>
+        <!-- Implicit styles -->
+        <Style TargetType="{x:Type Entry}">
+            <Setter Property="BackgroundColor" Value="{x:DynamicResource CtrlBackground}" />
+        </Style>
 
-        <Label
-            BindingContext="{x:Reference this}"
-            Text="{Binding H2LabelText}"
-            SemanticProperties.HeadingLevel="Level1"
-            SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-            FontSize="18"
-            HorizontalOptions="Center" />
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Margin"  Value="0,10,0,0" />
+        </Style>
 
-        <Label
+        <Style TargetType="{x:Type DatePicker}">
+            <Setter Property="BackgroundColor" Value="{x:DynamicResource CtrlBackground}" />
+        </Style>
+    </ContentView.Resources>
+
+    <VerticalStackLayout>
+
+        <Label Text="FirstName"/>
+        <Entry
             BindingContext="{x:Reference this}"
-            Text="{Binding H3LabelText}"
-            FontSize="18"
+            Text="{Binding FirstName}"/>
+
+        <Label Text="LastName"/>
+        <Entry
+            BindingContext="{x:Reference this}"
+            Text="{Binding LastName}" />
+
+        <Label Text="Birth date"/>
+        <DatePicker 
+            Format="D"
+            Date="{Binding BirthDate}" />
+
+        <Label Text="Country"/>
+        <Entry
+            BindingContext="{x:Reference this}"
+            Text="{Binding Country}" />
+
+        <Label Text="Full Name : "/>
+        <Label
             FontAttributes="Bold"
-            x:Name="CounterLabel"
-            HorizontalOptions="Center" />
+            BindingContext="{x:Reference this}"
+            Text="{Binding DisplayName}"/>
+
     </VerticalStackLayout>
 </ContentView>

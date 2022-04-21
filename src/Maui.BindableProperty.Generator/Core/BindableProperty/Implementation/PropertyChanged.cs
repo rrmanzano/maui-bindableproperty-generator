@@ -1,4 +1,5 @@
-﻿using Maui.BindableProperty.Generator.Helpers;
+﻿using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation.Interfaces;
+using Maui.BindableProperty.Generator.Helpers;
 using Microsoft.CodeAnalysis;
 
 namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
@@ -20,42 +21,62 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
             this.ClassSymbol = classSymbol;
         }
 
-        public bool Implemented()
+        public bool SetterImplemented()
         {
-            return !this.OnChangedProperty.IsNull;
+            return false;
         }
 
         public string ProcessBindableParameters()
         {
-            if (!this.OnChangedProperty.IsNull)
-            {
-                var method = this.OnChangedProperty.Value?.ToString();
-                return $@"propertyChanged: __{method}";
-            }
-
-            return null;
+            return this.OnChangedProperty.Validate(methodName => {
+                return $@"propertyChanged: __{methodName}";
+            });
         }
 
         public void ProcessBodyStter(CodeWriter w)
         {
-            if (!this.OnChangedProperty.IsNull)
-            {
-                var method = this.OnChangedProperty.Value?.ToString();
-                w._($@"this.{method}(value);");
-            }
+            // Not implemented
         }
 
         public void ProcessImplementationLogic(CodeWriter w)
         {
-            if (!this.OnChangedProperty.IsNull)
-            {
-                var method = this.OnChangedProperty.Value?.ToString();
+            this.OnChangedProperty.Validate(methodName => {
+                var methodDefinition = @$"private static void __{methodName}(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)";
+
+                if (w.ToString().Contains(methodDefinition))
+                    return default;
+
                 w._(AutoBindableConstants.AttributeGeneratedCodeString);
-                using (w.B(@$"public static void __{method}(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)"))
+                using (w.B(methodDefinition))
                 {
-                    w._($@"(({this.ClassSymbol.Name})bindable).{method}(({this.FieldSymbol.Type})newValue);");
+                    var methods = this.GetMethodsToCall(methodName);
+                    if (methods.Any())
+                    {
+                        w._($@"var ctrl = ({this.ClassSymbol.Name})bindable;");
+                        methods.ToList().ForEach(m => {
+                            var count = m.Parameters.Count();
+                            if (count == 0)
+                                w._($@"ctrl.{methodName}();");
+                            else if (count == 1)
+                                w._($@"ctrl.{methodName}(({this.FieldSymbol.Type})newValue);");
+                            else if (count == 2)
+                                w._($@"ctrl.{methodName}(({this.FieldSymbol.Type})oldValue, ({this.FieldSymbol.Type})newValue);");
+                        });
+                    }
                 }
-            }
+
+                return default;
+            });
+        }
+
+        private IEnumerable<IMethodSymbol> GetMethodsToCall(string methodName)
+        {
+            var typeSymbol = this.FieldSymbol.Type;
+            var methods = this.ClassSymbol.GetMembers(methodName)
+                            .OfType<IMethodSymbol>()
+                            .Where(m => m != null && (m.Parameters.Count() == 0 || (m.Parameters.Count() <= 2 && m.Parameters.All(p => p.Type.Equals(typeSymbol, SymbolEqualityComparer.Default)))));
+
+            return methods.OrderBy(m => m.Parameters.Count());
         }
     }
 }

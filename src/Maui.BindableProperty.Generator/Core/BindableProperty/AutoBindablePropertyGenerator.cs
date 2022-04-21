@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.Text;
 using System.Text;
 using Maui.BindableProperty.Generator.Helpers;
 using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation;
+using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation.Interfaces;
 
 namespace Maui.BindableProperty.Generator.Core.BindableProperty
 {
@@ -11,7 +12,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
     public class AutoBindablePropertyGenerator : ISourceGenerator
     {
         private TypedConstant NameProperty { get; set; }
-        private readonly List<IImplementation> CustomImplementations = new() { new PropertyChanged() };
+        private readonly List<IImplementation> CustomImplementations = new() { new DefaultValue(), new PropertyChanged(), new DefaultBindingMode() };
 
         private const string attributeText = @"
         using System;
@@ -26,6 +27,10 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
                 public string PropertyName { get; set; }
 
                 public string OnChanged { get; set; }
+
+                public string DefaultValue { get; set; }
+
+                public string DefaultBindingMode { get; set; }
             }
         }";
 
@@ -80,7 +85,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var bindablePropertyName = $@"{propertyName}Property";
             var customParameters = this.ProcessBindableParameters();
             w._(AutoBindableConstants.AttributeGeneratedCodeString);
-            w._($@"public static readonly Microsoft.Maui.Controls.BindableProperty {bindablePropertyName} = Microsoft.Maui.Controls.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}), default({fieldType}){customParameters});");
+            w._($@"public static readonly Microsoft.Maui.Controls.BindableProperty {bindablePropertyName} = Microsoft.Maui.Controls.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}){customParameters});");
             w._(AutoBindableConstants.AttributeGeneratedCodeString);
             using (w.B(@$"public {fieldType} {propertyName}"))
             {
@@ -101,7 +106,6 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
             this.ProcessImplementationLogic(w);
         }
-
 
         private void InitializeAttrProperties(IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
         {
@@ -132,7 +136,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
         private bool ExistsBodySetter()
         {
-            return this.CustomImplementations.Any(i => i.Implemented());
+            return this.CustomImplementations.Any(i => i.SetterImplemented());
         }
 
         private string ChooseName(string fieldName, TypedConstant overridenNameOpt)
