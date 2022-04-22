@@ -5,14 +5,6 @@
              xmlns:controls="clr-namespace:Maui.BindableProperty.Generator.Demo.CustomControls"
              x:Name="this">
 
-    <ContentPage.Resources>
-        <Color x:Key="CtrlBackground">#f6f6f6</Color>
-        <!-- Implicit styles -->
-        <Style TargetType="{x:Type Editor}">
-            <Setter Property="BackgroundColor" Value="{x:DynamicResource CtrlBackground}" />
-        </Style>
-    </ContentPage.Resources>
-
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30">
 

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Text;
 
 namespace Maui.BindableProperty.Generator.Demo.ViewModels
 {

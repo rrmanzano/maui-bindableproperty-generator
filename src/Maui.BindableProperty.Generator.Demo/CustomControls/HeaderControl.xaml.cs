@@ -4,20 +4,24 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
     public partial class HeaderControl : ContentView
     {
+        #pragma warning disable CS0169
+
         [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
-        private string _firstName;
+        private readonly string _firstName;
 
         [AutoBindable(PropertyName = "LastName", OnChanged = nameof(UpdateDisplayName))]
-        private string _l;
+        private readonly string _l;
 
         [AutoBindable(DefaultValue = "DateTime.Now", OnChanged = nameof(OnDateTimeChanged))]
-        private DateTime _birthDate;
+        private readonly DateTime _birthDate;
 
         [AutoBindable(DefaultValue = "USA")]
-        private string _country;
+        private readonly string _country;
 
         [AutoBindable]
-        private string _displayName;
+        private readonly string _displayName;
+
+        #pragma warning restore CS0169
 
         public HeaderControl()
         {

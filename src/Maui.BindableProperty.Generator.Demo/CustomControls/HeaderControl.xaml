@@ -5,19 +5,11 @@
              x:Name="this">
 
     <ContentView.Resources>
-        <Color x:Key="CtrlBackground">#f6f6f6</Color>
-        <!-- Implicit styles -->
-        <Style TargetType="{x:Type Entry}">
-            <Setter Property="BackgroundColor" Value="{x:DynamicResource CtrlBackground}" />
-        </Style>
 
         <Style TargetType="{x:Type Label}">
             <Setter Property="Margin"  Value="0,10,0,0" />
         </Style>
 
-        <Style TargetType="{x:Type DatePicker}">
-            <Setter Property="BackgroundColor" Value="{x:DynamicResource CtrlBackground}" />
-        </Style>
     </ContentView.Resources>
 
     <VerticalStackLayout>
