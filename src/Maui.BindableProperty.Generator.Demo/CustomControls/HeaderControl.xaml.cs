@@ -1,20 +1,19 @@
 ﻿using Maui.BindableProperty.Generator.Core;
 
-
 namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
     public partial class HeaderControl : ContentView
     {
-        [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWayToSource), OnChanged = nameof(UpdateDisplayName))]
+        [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
         private string _firstName;
 
-        [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWayToSource), PropertyName = "LastName", OnChanged = nameof(UpdateDisplayName))]
+        [AutoBindable(PropertyName = "LastName", OnChanged = nameof(UpdateDisplayName))]
         private string _l;
 
-        [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWayToSource), DefaultValue = "DateTime.Now", OnChanged = nameof(OnDateTimeChanged))]
+        [AutoBindable(DefaultValue = "DateTime.Now", OnChanged = nameof(OnDateTimeChanged))]
         private DateTime _birthDate;
 
-        [AutoBindable(DefaultBindingMode = nameof(BindingMode.OneWayToSource), DefaultValue = "USA")]
+        [AutoBindable(DefaultValue = "USA")]
         private string _country;
 
         [AutoBindable]

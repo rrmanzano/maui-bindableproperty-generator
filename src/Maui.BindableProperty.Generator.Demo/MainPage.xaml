@@ -5,20 +5,29 @@
              xmlns:controls="clr-namespace:Maui.BindableProperty.Generator.Demo.CustomControls"
              x:Name="this">
 
+    <ContentPage.Resources>
+        <Color x:Key="CtrlBackground">#f6f6f6</Color>
+        <!-- Implicit styles -->
+        <Style TargetType="{x:Type Editor}">
+            <Setter Property="BackgroundColor" Value="{x:DynamicResource CtrlBackground}" />
+        </Style>
+    </ContentPage.Resources>
+
     <ScrollView>
         <VerticalStackLayout Spacing="25" Padding="30">
 
             <controls:HeaderControl
-                FirstName = "{Binding BindingContext.FirstName, Source={x:Reference this}}"
-                LastName = "{Binding BindingContext.LastName, Source={x:Reference this}}"
-                BirthDate = "{Binding BindingContext.LastName, Source={x:Reference this}}"
-                Country = "{Binding BindingContext.Country, Source={x:Reference this}}"/>
+                BindingContext="{x:Reference this}"
+                FirstName = "{Binding BindingContext.FirstName, Mode=OneWayToSource}"
+                LastName = "{Binding BindingContext.LastName, Mode=OneWayToSource}"
+                BirthDate = "{Binding BindingContext.BirthDate, Mode=OneWayToSource}"
+                Country = "{Binding BindingContext.Country, Mode=OneWayToSource}"/>
 
             <Button 
-                Text="Clear"
+                Text="Log data"
                 FontAttributes="Bold"
                 SemanticProperties.Hint="Save data"
-                Command="{Binding SaveClickedCommand}"
+                Command="{Binding LogClickedCommand}"
                 HorizontalOptions="FillAndExpand" />
 
         </VerticalStackLayout>

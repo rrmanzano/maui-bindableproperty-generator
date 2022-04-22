@@ -24,29 +24,25 @@
 
         <Label Text="FirstName"/>
         <Entry
-            BindingContext="{x:Reference this}"
-            Text="{Binding FirstName}"/>
+            Text="{Binding Source={x:Reference this},Path=FirstName}"/>
 
         <Label Text="LastName"/>
         <Entry
-            BindingContext="{x:Reference this}"
-            Text="{Binding LastName}" />
+            Text="{Binding Source={x:Reference this},Path=LastName}" />
 
         <Label Text="Birth date"/>
-        <DatePicker 
+        <DatePicker
             Format="D"
-            Date="{Binding BirthDate}" />
+            Date="{Binding Source={x:Reference this},Path=BirthDate}" />
 
         <Label Text="Country"/>
         <Entry
-            BindingContext="{x:Reference this}"
-            Text="{Binding Country}" />
+            Text="{Binding Source={x:Reference this},Path=Country}" />
 
         <Label Text="Full Name : "/>
         <Label
             FontAttributes="Bold"
-            BindingContext="{x:Reference this}"
-            Text="{Binding DisplayName}"/>
+            Text="{Binding Source={x:Reference this},Path=DisplayName}"/>
 
     </VerticalStackLayout>
 </ContentView>

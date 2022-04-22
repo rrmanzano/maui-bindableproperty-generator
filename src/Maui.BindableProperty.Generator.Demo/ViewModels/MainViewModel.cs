@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Text;
 
 namespace Maui.BindableProperty.Generator.Demo.ViewModels
 {
@@ -20,12 +21,12 @@ namespace Maui.BindableProperty.Generator.Demo.ViewModels
         public MainViewModel(){}
 
         [ICommand]
-        private void SaveClicked()
+        private void LogClicked()
         {
-            this.FirstName = null;
-            this.LastName = null;
-            this.Country = null;
-            this.BirthDate = DateTime.Now;
+            System.Diagnostics.Debug.WriteLine(@$"FirstName -> {this.FirstName}");
+            System.Diagnostics.Debug.WriteLine(@$"LastName -> {this.LastName}");
+            System.Diagnostics.Debug.WriteLine(@$"Country -> {this.Country}");
+            System.Diagnostics.Debug.WriteLine(@$"BirthDate -> {this.BirthDate}");
         }
 
         partial void OnFirstNameChanged(string value)

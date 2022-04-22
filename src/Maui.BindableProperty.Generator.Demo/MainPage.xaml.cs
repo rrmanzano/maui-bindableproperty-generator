@@ -6,9 +6,8 @@ namespace Maui.BindableProperty.Generator.Demo
     {
         public MainPage(MainViewModel viewModel)
         {
-            InitializeComponent();
             this.BindingContext = viewModel;
+            InitializeComponent();
         }
-
     }
 }
