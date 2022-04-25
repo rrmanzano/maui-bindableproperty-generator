@@ -6,7 +6,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
 {
     public class DefaultBindingMode : IImplementation
     {
-        private const string FullNameSpaceBindingMode = "Microsoft.Maui.Controls.BindingMode";
+        private const string FullNameSpaceBindingMode = $"{AutoBindableConstants.FullNameMauiControls}.BindingMode";
         private TypedConstant DefaultBindingModeValueProperty { get; set; }
         private IFieldSymbol FieldSymbol { get; set; }
         private ISymbol AttributeSymbol { get; set; }
@@ -14,7 +14,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
 
         public void Initialize(TypedConstant nameProperty, IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
         {
-            this.DefaultBindingModeValueProperty = fieldSymbol.GetTypedConstant(attributeSymbol, "DefaultBindingMode");
+            this.DefaultBindingModeValueProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrDefaultBindingMode);
             this.FieldSymbol = fieldSymbol;
             this.AttributeSymbol = attributeSymbol;
             this.ClassSymbol = classSymbol;
@@ -28,7 +28,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
         public string ProcessBindableParameters()
         {
             var fieldType = this.FieldSymbol.Type;
-            var defaultValue = this.DefaultBindingModeValueProperty.Validate(value =>
+            var defaultValue = this.DefaultBindingModeValueProperty.GetValue<string>(value =>
             {
                 if (!value.Contains(FullNameSpaceBindingMode))
                 {

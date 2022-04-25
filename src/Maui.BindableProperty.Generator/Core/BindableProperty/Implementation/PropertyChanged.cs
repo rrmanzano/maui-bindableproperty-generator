@@ -15,7 +15,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
         public void Initialize(TypedConstant nameProperty, IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
         {
             this.NameProperty = nameProperty;
-            this.OnChangedProperty = fieldSymbol.GetTypedConstant(attributeSymbol, "OnChanged");
+            this.OnChangedProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrOnChanged);
             this.FieldSymbol = fieldSymbol;
             this.AttributeSymbol = attributeSymbol;
             this.ClassSymbol = classSymbol;
@@ -28,7 +28,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
 
         public string ProcessBindableParameters()
         {
-            return this.OnChangedProperty.Validate(methodName => {
+            return this.OnChangedProperty.GetValue<string>(methodName => {
                 return $@"propertyChanged: __{methodName}";
             });
         }
@@ -40,13 +40,13 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
 
         public void ProcessImplementationLogic(CodeWriter w)
         {
-            this.OnChangedProperty.Validate(methodName => {
+            this.OnChangedProperty.GetValue<string>(methodName => {
                 var methodDefinition = @$"private static void __{methodName}(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)";
 
                 if (w.ToString().Contains(methodDefinition))
                     return default;
 
-                w._(AutoBindableConstants.AttributeGeneratedCodeString);
+                w._(AutoBindableConstants.AttrGeneratedCodeString);
                 using (w.B(methodDefinition))
                 {
                     var methods = this.GetMethodsToCall(methodName);

@@ -20,12 +20,28 @@ namespace Maui.BindableProperty.Generator.Helpers
             return type.SpecialType == SpecialType.System_String;
         }
 
-        public static string Validate(this TypedConstant TypedConstant, Func<string, string> onSuccess)
+        public static T GetValue<T>(
+            this IFieldSymbol fieldSymbol,
+            ISymbol attributeSymbol,
+            string key,
+            Func<T, T> onSuccess = null)
+        {
+            var typeConstant = fieldSymbol.GetTypedConstant(attributeSymbol, key);
+            return typeConstant.GetValue(onSuccess);
+        }
+
+        public static T GetValue<T>(
+            this TypedConstant TypedConstant,
+            Func<T, T> onSuccess = null)
         {
             if (!TypedConstant.IsNull)
             {
-                var value = TypedConstant.Value?.ToString();
-                return onSuccess.Invoke(value);
+
+                var value = TypedConstant.Value;
+                if (value.GetType() == typeof(T))
+                {
+                    return onSuccess.Invoke((T)value);
+                }
             }
 
             return default;

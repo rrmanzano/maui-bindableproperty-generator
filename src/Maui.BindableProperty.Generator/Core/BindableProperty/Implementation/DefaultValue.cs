@@ -13,7 +13,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
 
         public void Initialize(TypedConstant nameProperty, IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
         {
-            this.DefaultValueProperty = fieldSymbol.GetTypedConstant(attributeSymbol, "DefaultValue");
+            this.DefaultValueProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrDefaultValue);
             this.FieldSymbol = fieldSymbol;
             this.AttributeSymbol = attributeSymbol;
             this.ClassSymbol = classSymbol;
@@ -27,7 +27,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
         public string ProcessBindableParameters()
         {
             var fieldType = this.FieldSymbol.Type;
-            var defaultValue = this.DefaultValueProperty.Validate(value =>
+            var defaultValue = this.DefaultValueProperty.GetValue<string>(value =>
             {
                 if (value != null)
                 {

@@ -36,7 +36,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
         public void Execute(GeneratorExecutionContext context)
         {
-            context.EachField<AutoBindableSyntaxReceiver>(AutoBindableConstants.AttributeClassDisplayString, (attributeSymbol, group) => {
+            context.EachField<AutoBindableSyntaxReceiver>(AutoBindableConstants.AttrClassDisplayString, (attributeSymbol, group) => {
                 var classSource = this.ProcessClass(group.Key, group.ToList(), attributeSymbol, context);
                 context.AddSource($"{group.Key.Name}.generated.cs", SourceText.From(classSource, Encoding.UTF8));
             });
@@ -53,7 +53,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var w = new CodeWriter(CodeWriterSettings.CSharpDefault);
             using (w.B(@$"namespace {namespaceName}"))
             {
-                w._(AutoBindableConstants.AttributeGeneratedCodeString);
+                w._(AutoBindableConstants.AttrGeneratedCodeString);
                 using (w.B(@$"public partial class {classSymbol.Name}"))
                 {
                     // Create properties for each field 
@@ -84,9 +84,9 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
             var bindablePropertyName = $@"{propertyName}Property";
             var customParameters = this.ProcessBindableParameters();
-            w._(AutoBindableConstants.AttributeGeneratedCodeString);
-            w._($@"public static readonly Microsoft.Maui.Controls.BindableProperty {bindablePropertyName} = Microsoft.Maui.Controls.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}){customParameters});");
-            w._(AutoBindableConstants.AttributeGeneratedCodeString);
+            w._(AutoBindableConstants.AttrGeneratedCodeString);
+            w._($@"public static readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} = {AutoBindableConstants.FullNameMauiControls}.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}){customParameters});");
+            w._(AutoBindableConstants.AttrGeneratedCodeString);
             using (w.B(@$"public {fieldType} {propertyName}"))
             {
                 w._($@"get => ({fieldType})GetValue({bindablePropertyName});");
@@ -109,7 +109,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
         private void InitializeAttrProperties(IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
         {
-            this.NameProperty = fieldSymbol.GetTypedConstant(attributeSymbol, "PropertyName");
+            this.NameProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrPropertyName);
             this.CustomImplementations.ForEach(i => i.Initialize(this.NameProperty, fieldSymbol, attributeSymbol, classSymbol));
         }
 
@@ -159,7 +159,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
         public void Initialize(GeneratorInitializationContext context)
         {
             // Register the attribute source
-            context.RegisterForPostInitialization((i) => i.AddSource("AutoBindableAttribute", attributeText));
+            context.RegisterForPostInitialization((i) => i.AddSource(AutoBindableConstants.AttrName, attributeText));
 
             // Register a syntax receiver that will be created for each generation pass
             context.RegisterForSyntaxNotifications(() => new AutoBindableSyntaxReceiver());

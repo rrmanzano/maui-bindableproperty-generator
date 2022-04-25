@@ -20,7 +20,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
                 {
                     // Get the symbol being declared by the field, and keep it if its annotated
                     if (context.SemanticModel.GetDeclaredSymbol(variable) is IFieldSymbol fieldSymbol &&
-                        fieldSymbol.GetAttributes().Any(ad => ad?.AttributeClass?.ToDisplayString() == AutoBindableConstants.AttributeClassDisplayString))
+                        fieldSymbol.GetAttributes().Any(ad => ad?.AttributeClass?.ToDisplayString() == AutoBindableConstants.AttrClassDisplayString))
                     {
                         Fields.Add(fieldSymbol);
                     }
