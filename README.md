@@ -253,6 +253,32 @@ the prevoius code will generate this:
     }
 ```
 
+## Usage - Hide existing BindableProperties
+Just decorate field with the Bindable attribute and set "HidesUnderlyingProperty = true".
+
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class HeaderControl : ContentView
+    {
+        [AutoBindable(HidesUnderlyingProperty = true)]
+        private readonly Color _backgroundColor;
+    }
+```
+the prevoius code will generate this:
+```csharp
+    public partial class HeaderControl
+    {
+        public static new readonly Microsoft.Maui.Controls.BindableProperty BackgroundColorProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(BackgroundColor), typeof(Microsoft.Maui.Graphics.Color), typeof(HeaderControl));
+
+        public new Microsoft.Maui.Graphics.Color BackgroundColor
+        {
+            get => (Microsoft.Maui.Graphics.Color)GetValue(BackgroundColorProperty);
+            set => SetValue(BackgroundColorProperty, value);
+        }
+    }
+```
+
 ## Project status
 
 - ✅ Simple implementation - Done

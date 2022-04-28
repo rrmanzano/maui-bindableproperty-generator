@@ -21,6 +21,9 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         [AutoBindable]
         private readonly string _displayName;
 
+        [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "Color.FromArgb(\"#bdbde6\")")]
+        private readonly Color _backgroundColor;
+
         #pragma warning restore CS0169
 
         public HeaderControl()
@@ -37,9 +40,9 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
                 name = FirstName;
             }
 
-            if (!string.IsNullOrEmpty(LastName))
+            if (!string.IsNullOrEmpty(this.LastName))
             {
-                name = $"{name} {LastName}";
+                name = $"{name} {this.LastName}";
             }
 
             this.DisplayName = name.Trim();

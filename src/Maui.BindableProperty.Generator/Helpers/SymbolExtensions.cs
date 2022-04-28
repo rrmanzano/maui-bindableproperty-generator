@@ -40,7 +40,12 @@ namespace Maui.BindableProperty.Generator.Helpers
                 var value = TypedConstant.Value;
                 if (value.GetType() == typeof(T))
                 {
-                    return onSuccess.Invoke((T)value);
+                    if (onSuccess != null)
+                    {
+                        return onSuccess.Invoke((T)value);
+                    }
+
+                    return (T)value;
                 }
             }
 

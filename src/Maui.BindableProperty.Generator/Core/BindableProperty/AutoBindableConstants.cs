@@ -19,5 +19,7 @@
         public const string AttrDefaultValue = "DefaultValue";
 
         public const string AttrDefaultBindingMode = "DefaultBindingMode";
+
+        public const string AttrHidesUnderlyingProperty = "HidesUnderlyingProperty";
     }
 }

@@ -31,6 +31,8 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
                 public string DefaultValue { get; set; }
 
                 public string DefaultBindingMode { get; set; }
+
+                public bool HidesUnderlyingProperty { get; set; } = false;
             }
         }";
 
@@ -84,10 +86,12 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
             var bindablePropertyName = $@"{propertyName}Property";
             var customParameters = this.ProcessBindableParameters();
+            var applyHidesUnderlying = fieldSymbol.GetValue<bool>(attributeSymbol, AutoBindableConstants.AttrHidesUnderlyingProperty);
+            var hidesUnderlying = applyHidesUnderlying ? " new" : string.Empty;
             w._(AutoBindableConstants.AttrGeneratedCodeString);
-            w._($@"public static readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} = {AutoBindableConstants.FullNameMauiControls}.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}){customParameters});");
+            w._($@"public static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} = {AutoBindableConstants.FullNameMauiControls}.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}){customParameters});");
             w._(AutoBindableConstants.AttrGeneratedCodeString);
-            using (w.B(@$"public {fieldType} {propertyName}"))
+            using (w.B(@$"public{hidesUnderlying} {fieldType} {propertyName}"))
             {
                 w._($@"get => ({fieldType})GetValue({bindablePropertyName});");
                 if (this.ExistsBodySetter())
