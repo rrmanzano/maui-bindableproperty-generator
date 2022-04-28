@@ -88,8 +88,19 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var customParameters = this.ProcessBindableParameters();
             var applyHidesUnderlying = fieldSymbol.GetValue<bool>(attributeSymbol, AutoBindableConstants.AttrHidesUnderlyingProperty);
             var hidesUnderlying = applyHidesUnderlying ? " new" : string.Empty;
+            var parameters = $"nameof({propertyName}),typeof({fieldType}),typeof({classSymbol.Name}){customParameters}".Split(',');
             w._(AutoBindableConstants.AttrGeneratedCodeString);
-            w._($@"public static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} = {AutoBindableConstants.FullNameMauiControls}.BindableProperty.Create(nameof({propertyName}), typeof({fieldType}), typeof({classSymbol.Name}){customParameters});");
+            w._($@"public static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} =");
+            w._($"{w.GetIndentString(6)}{AutoBindableConstants.FullNameMauiControls}.BindableProperty.Create(");
+
+            for (int i = 0; i < parameters.Length; i++)
+            {
+                var parameter = parameters[i];
+                var ends = i < parameters.Length - 1 ? "," : ");";
+                w._($"{w.GetIndentString(12)}{parameter}{ends}");
+            }
+
+            w._();
             w._(AutoBindableConstants.AttrGeneratedCodeString);
             using (w.B(@$"public{hidesUnderlying} {fieldType} {propertyName}"))
             {
@@ -123,7 +134,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
                                     .Select(i => i.ProcessBindableParameters())
                                     .Where(x => !string.IsNullOrEmpty(x));
             
-            return parameters.Any() ? $@", { string.Join(", ", parameters) }" : string.Empty;
+            return parameters.Any() ? $@",{ string.Join(",", parameters) }" : string.Empty;
         }
 
         private void ProcessBodyStter(CodeWriter w)

@@ -26,7 +26,13 @@ the prevoius code will generate this:
 ```csharp
     public partial class CustomEntry
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty PlaceholderProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(CustomEntry), default(string));
+        public static readonly Microsoft.Maui.Controls.BindableProperty PlaceholderProperty =
+                                    Microsoft.Maui.Controls.BindableProperty.Create(
+                                                            nameof(Placeholder),
+                                                            typeof(string),
+                                                            typeof(CustomEntry),
+                                                            default(string));
+
         public string Placeholder
         {
             get => (string)GetValue(PlaceholderProperty);
@@ -51,7 +57,13 @@ the prevoius code will generate this:
 ```csharp
     public partial class CustomEntry
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty TextProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(Text), typeof(string), typeof(CustomEntry), default(string));
+        public static readonly Microsoft.Maui.Controls.BindableProperty TextProperty =
+                                    Microsoft.Maui.Controls.BindableProperty.Create(
+                                                            nameof(Text),
+                                                            typeof(string),
+                                                            typeof(CustomEntry),
+                                                            default(string));
+
         public string Text
         {
             get => (string)GetValue(TextProperty);
@@ -83,7 +95,13 @@ the prevoius code will generate this:
 ```csharp
     public partial class HeaderControl
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(FirstName), typeof(string), typeof(HeaderControl), defaultValue: default(string), propertyChanged: __UpdateDisplayName);
+        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
+                                    Microsoft.Maui.Controls.BindableProperty.Create(
+                                                            nameof(FirstName),
+                                                            typeof(string),
+                                                            typeof(HeaderControl),
+                                                            defaultValue: default(string),
+                                                            propertyChanged: __UpdateDisplayName);
 
         public string FirstName
         {
@@ -120,7 +138,13 @@ the prevoius code will generate this:
 ```csharp
     public partial class HeaderControl
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(FirstName), typeof(string), typeof(HeaderControl), defaultValue: default(string), propertyChanged: __UpdateDisplayName);
+        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
+                                    Microsoft.Maui.Controls.BindableProperty.Create(
+                                                            nameof(FirstName),
+                                                            typeof(string),
+                                                            typeof(HeaderControl),
+                                                            defaultValue: default(string),
+                                                            propertyChanged: __UpdateDisplayName);
 
         public string FirstName
         {
@@ -157,7 +181,13 @@ the prevoius code will generate this:
 ```csharp
     public partial class HeaderControl
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(FirstName), typeof(string), typeof(HeaderControl), defaultValue: default(string), propertyChanged: __UpdateDisplayName);
+        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
+                                    Microsoft.Maui.Controls.BindableProperty.Create(
+                                                            nameof(FirstName),
+                                                            typeof(string),
+                                                            typeof(HeaderControl),
+                                                            defaultValue: default(string),
+                                                            propertyChanged: __UpdateDisplayName);
 
         public string FirstName
         {
@@ -191,7 +221,12 @@ the prevoius code will generate this:
 ```csharp
     public partial class HeaderControl
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty BirthDateProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(BirthDate), typeof(System.DateTime), typeof(HeaderControl), defaultValue: DateTime.Now);
+        public static readonly Microsoft.Maui.Controls.BindableProperty BirthDateProperty =
+                                    Microsoft.Maui.Controls.BindableProperty.Create(
+                                                            nameof(BirthDate),
+                                                            typeof(System.DateTime),
+                                                            typeof(HeaderControl),
+                                                            defaultValue: DateTime.Now);
 
         public System.DateTime BirthDate
         {
@@ -217,7 +252,12 @@ the prevoius code will generate this:
 ```csharp
     public partial class HeaderControl
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(Country), typeof(string), typeof(HeaderControl), defaultValue: "USA");
+        public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty =
+                                    Microsoft.Maui.Controls.BindableProperty.Create(
+                                                            nameof(Country),
+                                                            typeof(string),
+                                                            typeof(HeaderControl),
+                                                            defaultValue: "USA");
 
         public string Country
         {
@@ -243,7 +283,13 @@ the prevoius code will generate this:
 ```csharp
     public partial class HeaderControl
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(FirstName), typeof(string), typeof(HeaderControl), defaultValue: default(string), defaultBindingMode: Microsoft.Maui.Controls.BindingMode.TwoWay);
+        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
+                                    Microsoft.Maui.Controls.BindableProperty.Create(
+                                                            nameof(FirstName),
+                                                            typeof(string),
+                                                            typeof(HeaderControl),
+                                                            defaultValue: default(string),
+                                                            defaultBindingMode: Microsoft.Maui.Controls.BindingMode.TwoWay);
 
         public string FirstName
         {
@@ -269,7 +315,11 @@ the prevoius code will generate this:
 ```csharp
     public partial class HeaderControl
     {
-        public static new readonly Microsoft.Maui.Controls.BindableProperty BackgroundColorProperty = Microsoft.Maui.Controls.BindableProperty.Create(nameof(BackgroundColor), typeof(Microsoft.Maui.Graphics.Color), typeof(HeaderControl));
+        public static new readonly Microsoft.Maui.Controls.BindableProperty BackgroundColorProperty =
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(BackgroundColor),
+                                                                typeof(Microsoft.Maui.Graphics.Color),
+                                                                typeof(HeaderControl));
 
         public new Microsoft.Maui.Graphics.Color BackgroundColor
         {
