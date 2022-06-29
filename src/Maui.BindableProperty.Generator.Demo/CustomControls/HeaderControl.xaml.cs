@@ -7,22 +7,22 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         #pragma warning disable CS0169
 
         [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
-        private readonly string _firstName;
+        private readonly string _firstName = string.Empty;
 
         [AutoBindable(PropertyName = "LastName", OnChanged = nameof(UpdateDisplayName))]
-        private readonly string _l;
+        private readonly string? _l;
 
         [AutoBindable(DefaultValue = "DateTime.Now", OnChanged = nameof(OnDateTimeChanged))]
-        private readonly DateTime _birthDate;
+        private readonly DateTime? _birthDate;
 
         [AutoBindable(DefaultValue = "USA")]
-        private readonly string _country;
+        private readonly string? _country;
 
         [AutoBindable]
-        private readonly string _displayName;
+        private readonly string? _displayName;
 
         [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "Color.FromArgb(\"#bdbde6\")")]
-        private readonly Color _backgroundColor;
+        private readonly Color? _backgroundColor;
 
         #pragma warning restore CS0169
 

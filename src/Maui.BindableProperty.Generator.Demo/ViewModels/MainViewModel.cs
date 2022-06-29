@@ -19,7 +19,7 @@ namespace Maui.BindableProperty.Generator.Demo.ViewModels
 
         public MainViewModel(){}
 
-        [ICommand]
+        [RelayCommand]
         private void LogClicked()
         {
             System.Diagnostics.Debug.WriteLine(@$"FirstName -> {this.FirstName}");

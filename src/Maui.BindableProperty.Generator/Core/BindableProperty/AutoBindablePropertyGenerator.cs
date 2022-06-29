@@ -88,7 +88,8 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var customParameters = this.ProcessBindableParameters();
             var applyHidesUnderlying = fieldSymbol.GetValue<bool>(attributeSymbol, AutoBindableConstants.AttrHidesUnderlyingProperty);
             var hidesUnderlying = applyHidesUnderlying ? " new" : string.Empty;
-            var parameters = $"nameof({propertyName}),typeof({fieldType}),typeof({classSymbol.Name}){customParameters}".Split(',');
+            var declaringType = fieldType.WithNullableAnnotation(NullableAnnotation.None);
+            var parameters = $"nameof({propertyName}),typeof({declaringType}),typeof({classSymbol.Name}){customParameters}".Split(',');
             w._(AutoBindableConstants.AttrGeneratedCodeString);
             w._($@"public static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} =");
             w._($"{w.GetIndentString(6)}{AutoBindableConstants.FullNameMauiControls}.BindableProperty.Create(");
