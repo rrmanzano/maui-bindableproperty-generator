@@ -50,7 +50,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
             return defaultValue != null ? $"defaultValue: {defaultValue}" : $"defaultValue: default({fieldType})";
         }
 
-        public void ProcessBodyStter(CodeWriter w)
+        public void ProcessBodySetter(CodeWriter w)
         {
             // Not implemented
         }

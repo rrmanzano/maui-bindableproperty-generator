@@ -7,7 +7,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation.I
         void Initialize(TypedConstant nameProperty, IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol);
         bool SetterImplemented();
         string ProcessBindableParameters();
-        void ProcessBodyStter(CodeWriter w);
+        void ProcessBodySetter(CodeWriter w);
         void ProcessImplementationLogic(CodeWriter w);
     }
 }

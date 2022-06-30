@@ -41,7 +41,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
             return defaultValue != default ? $"defaultBindingMode: {defaultValue}" : default;
         }
 
-        public void ProcessBodyStter(CodeWriter w)
+        public void ProcessBodySetter(CodeWriter w)
         {
             // Not implemented
         }

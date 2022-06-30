@@ -33,7 +33,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
             });
         }
 
-        public void ProcessBodyStter(CodeWriter w)
+        public void ProcessBodySetter(CodeWriter w)
         {
             // Not implemented
         }

@@ -10,7 +10,7 @@ namespace Maui.BindableProperty.Generator.Helpers
             string key)
         {
             // Get the AutoNotify attribute from the field, and any associated data
-            var attributeData = fieldSymbol.GetAttributes().Single(ad => ad.AttributeClass.Equals(attributeSymbol, SymbolEqualityComparer.Default));
+            var attributeData = fieldSymbol.GetAttributes().Single(ad => attributeSymbol.Equals(ad.AttributeClass, SymbolEqualityComparer.Default));
             return attributeData.NamedArguments.SingleOrDefault(kvp => kvp.Key == key).Value;
         }
 
@@ -38,7 +38,7 @@ namespace Maui.BindableProperty.Generator.Helpers
             {
 
                 var value = TypedConstant.Value;
-                if (value.GetType() == typeof(T))
+                if (value?.GetType() == typeof(T))
                 {
                     if (onSuccess != null)
                     {
