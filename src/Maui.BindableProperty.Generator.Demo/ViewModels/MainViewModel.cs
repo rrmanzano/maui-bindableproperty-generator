@@ -6,18 +6,16 @@ namespace Maui.BindableProperty.Generator.Demo.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _firstName;
+        private string? _firstName;
 
         [ObservableProperty]
-        private string _lastName;
+        private string? _lastName;
 
         [ObservableProperty]
         private DateTime _birthDate;
 
         [ObservableProperty]
-        private string _country;
-
-        public MainViewModel(){}
+        private string? _country;
 
         [RelayCommand]
         private void LogClicked()
@@ -28,7 +26,7 @@ namespace Maui.BindableProperty.Generator.Demo.ViewModels
             System.Diagnostics.Debug.WriteLine(@$"BirthDate -> {this.BirthDate}");
         }
 
-        partial void OnFirstNameChanged(string value)
+        partial void OnFirstNameChanged(string? value)
         {
             System.Diagnostics.Debug.WriteLine("Method OnFirstNameChanged fired");
             System.Diagnostics.Debug.WriteLine(value);

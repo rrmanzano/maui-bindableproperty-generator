@@ -15,6 +15,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
         private readonly List<IImplementation> CustomImplementations = new() { new DefaultValue(), new PropertyChanged(), new DefaultBindingMode() };
 
         private const string attributeText = @"
+        #nullable enable
         using System;
         namespace Maui.BindableProperty.Generator.Core
         {
@@ -24,13 +25,13 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             {
                 public AutoBindableAttribute(){}
 
-                public string PropertyName { get; set; }
+                public string PropertyName { get; set; } = string.Empty;
 
-                public string OnChanged { get; set; }
+                public string? OnChanged { get; set; }
 
-                public string DefaultValue { get; set; }
+                public string? DefaultValue { get; set; }
 
-                public string DefaultBindingMode { get; set; }
+                public string? DefaultBindingMode { get; set; }
 
                 public bool HidesUnderlyingProperty { get; set; } = false;
             }
@@ -53,7 +54,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
             var w = new CodeWriter(CodeWriterSettings.CSharpDefault);
-            using (w.B(@$"namespace {namespaceName}"))
+            using (w.B("#nullable enable", @$"namespace {namespaceName}"))
             {
                 w._(AutoBindableConstants.AttrGeneratedCodeString);
                 using (w.B(@$"public partial class {classSymbol.Name}"))
@@ -111,7 +112,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
                     using (w.B(@$"set"))
                     {
                         w._($@"SetValue({bindablePropertyName}, value);");
-                        this.ProcessBodyStter(w);
+                        this.ProcessBodySetter(w);
                     }
                 }
                 else
@@ -133,15 +134,15 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
         {
             var parameters = this.CustomImplementations
                                     .Select(i => i.ProcessBindableParameters())
-                                    .Where(x => !string.IsNullOrEmpty(x));
+                                    .Where(x => !string.IsNullOrEmpty(x)).ToArray();
             
-            return parameters.Any() ? $@",{ string.Join(",", parameters) }" : string.Empty;
+            return parameters.Length > 0 ? $@",{ string.Join(",", parameters) }" : string.Empty;
         }
 
-        private void ProcessBodyStter(CodeWriter w)
+        private void ProcessBodySetter(CodeWriter w)
         {
             this.CustomImplementations
-                    .ForEach(i => i.ProcessBodyStter(w));
+                    .ForEach(i => i.ProcessBodySetter(w));
         }
 
         private void ProcessImplementationLogic(CodeWriter w)

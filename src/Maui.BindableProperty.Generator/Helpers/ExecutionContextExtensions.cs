@@ -22,7 +22,7 @@ namespace Maui.BindableProperty.Generator.Helpers
 
             // Group the fields by class, and generate the source
 #pragma warning disable RS1024 // Symbols should be compared for equality
-            foreach (IGrouping<INamedTypeSymbol, IFieldSymbol> group in receiver.Fields?.GroupBy(f => f.ContainingType))
+            foreach (IGrouping<INamedTypeSymbol, IFieldSymbol> group in receiver.Fields?.GroupBy(f => f.ContainingType) ?? Enumerable.Empty<IGrouping<INamedTypeSymbol, IFieldSymbol>>())
             {
                 action?.Invoke(attributeSymbol, group);
             }
