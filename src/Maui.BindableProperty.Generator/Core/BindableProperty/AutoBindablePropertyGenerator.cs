@@ -15,6 +15,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
         private readonly List<IImplementation> CustomImplementations = new() { new DefaultValue(), new PropertyChanged(), new DefaultBindingMode() };
 
         private const string attributeText = @"
+        #pragma warning disable
         #nullable enable
         using System;
         namespace Maui.BindableProperty.Generator.Core
@@ -54,7 +55,9 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
             var namespaceName = classSymbol.ContainingNamespace.ToDisplayString();
             var w = new CodeWriter(CodeWriterSettings.CSharpDefault);
-            using (w.B("#nullable enable", @$"namespace {namespaceName}"))
+            w._("#pragma warning disable");
+            w._("#nullable enable");
+            using (w.B(@$"namespace {namespaceName}"))
             {
                 w._(AutoBindableConstants.AttrGeneratedCodeString);
                 using (w.B(@$"public partial class {classSymbol.Name}"))
