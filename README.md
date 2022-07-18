@@ -2,7 +2,8 @@
 
 # Maui.BindableProperty.Generator
 
-Source generator that automatically transforms fields into BindableProperties that can be used in MAUI. 
+Source generator that automatically transforms fields into BindableProperties that can be used in MAUI.  
+Are you looking for the Xamarin project? check this [link](https://github.com/rrmanzano/xamarin-bindableproperty-generator)
 
 ## Installation
 First, [install NuGet](http://docs.nuget.org/docs/start-here/installing-nuget). Then, install [M.BindableProperty.Generator](https://www.nuget.org/packages/M.BindableProperty.Generator/) from the package manager console:

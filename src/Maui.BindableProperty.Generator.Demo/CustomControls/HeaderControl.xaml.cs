@@ -2,7 +2,7 @@
 
 namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
-    public partial class HeaderControl : ContentView
+    public partial class HeaderControl : VerticalStackLayout
     {
         #pragma warning disable CS0169
 
@@ -21,8 +21,8 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         [AutoBindable]
         private readonly string? _displayName;
 
-        [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "Color.FromArgb(\"#bdbde6\")")]
-        private readonly Color? _backgroundColor;
+        [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "Color.FromArgb(\"#cc3340\")")]
+        private readonly Color _backgroundColor = Color.FromArgb("#cc3340");
 
         #pragma warning restore CS0169
 

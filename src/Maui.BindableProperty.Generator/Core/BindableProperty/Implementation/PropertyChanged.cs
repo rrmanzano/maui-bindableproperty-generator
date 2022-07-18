@@ -41,7 +41,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
         public void ProcessImplementationLogic(CodeWriter w)
         {
             this.OnChangedProperty.GetValue<string>(methodName => {
-                var methodDefinition = @$"private static void __{methodName}(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)";
+                var methodDefinition = @$"private static void __{methodName}({AutoBindableConstants.FullNameMauiControls}.BindableObject bindable, object oldValue, object newValue)";
 
                 if (w.ToString().Contains(methodDefinition))
                     return default;

@@ -1,40 +1,39 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl"
-             x:Name="this">
+<VerticalStackLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl"
+    x:Name="this">
 
-    <ContentView.Resources>
+    <VerticalStackLayout.Resources>
 
         <Style TargetType="{x:Type Label}">
             <Setter Property="Margin"  Value="0,10,0,0" />
         </Style>
 
-    </ContentView.Resources>
+    </VerticalStackLayout.Resources>
 
-    <VerticalStackLayout>
+    <Label Text="FirstName"/>
+    <Entry
+        Text="{Binding Source={x:Reference this},Path=FirstName}"/>
 
-        <Label Text="FirstName"/>
-        <Entry
-            Text="{Binding Source={x:Reference this},Path=FirstName}"/>
+    <Label Text="LastName"/>
+    <Entry
+        Text="{Binding Source={x:Reference this},Path=LastName}" />
 
-        <Label Text="LastName"/>
-        <Entry
-            Text="{Binding Source={x:Reference this},Path=LastName}" />
+    <Label Text="Birth date"/>
+    <DatePicker
+        Format="D"
+        Date="{Binding Source={x:Reference this},Path=BirthDate}" />
 
-        <Label Text="Birth date"/>
-        <DatePicker
-            Format="D"
-            Date="{Binding Source={x:Reference this},Path=BirthDate}" />
+    <Label Text="Country"/>
+    <Entry
+        Text="{Binding Source={x:Reference this},Path=Country}" />
 
-        <Label Text="Country"/>
-        <Entry
-            Text="{Binding Source={x:Reference this},Path=Country}" />
-
-        <Label Text="Full Name : "/>
-        <Label
-            FontAttributes="Bold"
-            Text="{Binding Source={x:Reference this},Path=DisplayName}"/>
-
-    </VerticalStackLayout>
-</ContentView>
+    <Label 
+        Text="Full Name : " />
+    <Label
+        FontAttributes="Bold"
+        Text="{Binding Source={x:Reference this},Path=DisplayName}"
+        BackgroundColor="{Binding Source={x:Reference this},Path=BackgroundColor}"/>
+        
+</VerticalStackLayout>
