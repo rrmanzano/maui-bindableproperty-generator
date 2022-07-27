@@ -10,7 +10,9 @@
 
         public const string AttrClassDisplayString = @$"{ProjectName}.Core.{AttrName}";
 
-        public const string AttrGeneratedCodeString = @$"[global::System.CodeDom.Compiler.GeneratedCode(""{ProjectName}"", null)]";
+        public const string AttrGeneratedCodeString = @$"[global::System.CodeDom.Compiler.GeneratedCode(""{{GeneratorFullName}}"", ""{{Version}}"")]";
+
+        public const string AttrExcludeFromCodeCoverageString = "[global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]";
 
         public const string AttrPropertyName = "PropertyName";
 

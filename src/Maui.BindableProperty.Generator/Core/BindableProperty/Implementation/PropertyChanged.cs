@@ -46,7 +46,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
                 if (w.ToString().Contains(methodDefinition))
                     return default;
 
-                w._(AutoBindableConstants.AttrGeneratedCodeString);
+                AttributeBuilder.WriteAllAttrGeneratedCodeStrings(w);
                 using (w.B(methodDefinition))
                 {
                     var methods = this.GetMethodsToCall(methodName);
