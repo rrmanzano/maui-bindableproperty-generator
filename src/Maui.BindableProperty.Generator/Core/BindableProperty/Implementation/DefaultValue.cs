@@ -8,15 +8,11 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
     {
         private TypedConstant DefaultValueProperty { get; set; }
         private IFieldSymbol FieldSymbol { get; set; }
-        private ISymbol AttributeSymbol { get; set; }
-        private INamedTypeSymbol ClassSymbol { get; set; }
 
-        public void Initialize(TypedConstant nameProperty, IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
+        public DefaultValue(IFieldSymbol fieldSymbol, ISymbol attributeSymbol)
         {
             this.DefaultValueProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrDefaultValue);
             this.FieldSymbol = fieldSymbol;
-            this.AttributeSymbol = attributeSymbol;
-            this.ClassSymbol = classSymbol;
         }
 
         public bool SetterImplemented()

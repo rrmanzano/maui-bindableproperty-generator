@@ -6,18 +6,14 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
 {
     public class PropertyChanged : IImplementation
     {
-        private TypedConstant NameProperty { get; set; }
         private TypedConstant OnChangedProperty { get; set; }
         private IFieldSymbol FieldSymbol { get; set; }
-        private ISymbol AttributeSymbol { get; set; }
         private INamedTypeSymbol ClassSymbol { get; set; }
 
-        public void Initialize(TypedConstant nameProperty, IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
+        public PropertyChanged(IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
         {
-            this.NameProperty = nameProperty;
             this.OnChangedProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrOnChanged);
             this.FieldSymbol = fieldSymbol;
-            this.AttributeSymbol = attributeSymbol;
             this.ClassSymbol = classSymbol;
         }
 

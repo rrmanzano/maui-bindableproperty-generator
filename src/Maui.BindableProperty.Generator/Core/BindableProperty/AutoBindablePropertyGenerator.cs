@@ -11,8 +11,12 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
     [Generator]
     public class AutoBindablePropertyGenerator : ISourceGenerator
     {
-        private TypedConstant NameProperty { get; set; }
-        private readonly List<IImplementation> CustomImplementations = new() { new DefaultValue(), new PropertyChanged(), new DefaultBindingMode() };
+        private readonly List<Type> TypeImplementations = new() {
+            typeof(DefaultValue),
+            typeof(PropertyChanged),
+            typeof(DefaultBindingMode)
+        };
+        private readonly List<IImplementation> Implementations = new();
 
         private const string attributeText = @"
         #pragma warning disable
@@ -79,9 +83,10 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var fieldName = fieldSymbol.Name;
             var fieldType = fieldSymbol.Type;
 
-            this.InitializeAttrProperties(fieldSymbol, attributeSymbol, classSymbol);
+            var nameProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrPropertyName);
+            this.InitializeImplementations(fieldSymbol, attributeSymbol, classSymbol);
 
-            var propertyName = this.ChooseName(fieldName, this.NameProperty);
+            var propertyName = this.ChooseName(fieldName, nameProperty);
             if (propertyName?.Length == 0 || propertyName == fieldName)
             {
                 // TODO: issue a diagnostic that we can't process this field
@@ -128,15 +133,22 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             this.ProcessImplementationLogic(w);
         }
 
-        private void InitializeAttrProperties(IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
+        private void InitializeImplementations(IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
         {
-            this.NameProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrPropertyName);
-            this.CustomImplementations.ForEach(i => i.Initialize(this.NameProperty, fieldSymbol, attributeSymbol, classSymbol));
+            this.Implementations.Clear();
+            var args = new object[] { fieldSymbol, attributeSymbol, classSymbol };
+            this.TypeImplementations.ForEach(t => {
+                var ctor = t.GetConstructors().FirstOrDefault();
+                var paramLength = ctor.GetParameters().Length;
+                var paramsCtor = args.Take(paramLength).ToArray();
+                var instantiatedType = Activator.CreateInstance(t, paramsCtor) as IImplementation;
+                this.Implementations.Add(instantiatedType);
+            });
         }
 
         private string ProcessBindableParameters()
         {
-            var parameters = this.CustomImplementations
+            var parameters = this.Implementations
                                     .Select(i => i.ProcessBindableParameters())
                                     .Where(x => !string.IsNullOrEmpty(x)).ToArray();
             
@@ -145,19 +157,19 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
         private void ProcessBodySetter(CodeWriter w)
         {
-            this.CustomImplementations
+            this.Implementations
                     .ForEach(i => i.ProcessBodySetter(w));
         }
 
         private void ProcessImplementationLogic(CodeWriter w)
         {
-            this.CustomImplementations
+            this.Implementations
                 .ForEach(i => i.ProcessImplementationLogic(w));
         }
 
         private bool ExistsBodySetter()
         {
-            return this.CustomImplementations.Any(i => i.SetterImplemented());
+            return this.Implementations.Any(i => i.SetterImplemented());
         }
 
         private string ChooseName(string fieldName, TypedConstant overridenNameOpt)
