@@ -12,7 +12,7 @@ PM> Install-Package M.BindableProperty.Generator
 ````
 
 ## Usage - Simple implementation
-Just decorate field with the Bindable attribute.
+Just decorate the field with the Bindable attribute.
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -20,7 +20,7 @@ Just decorate field with the Bindable attribute.
     public partial class CustomEntry : ContentView
     {
         [AutoBindable]
-        private string _placeholder;
+        private readonly string _placeholder;
     }
 ```
 the prevoius code will generate this:
@@ -42,8 +42,19 @@ the prevoius code will generate this:
     }
 ```
 
-## Usage - Custom property name
-Just decorate field with the Bindable attribute.
+## Options
+
+| Option                    | Description                    | Type                             |
+| -------------             | ------------------------------ | ------------------------------   |
+| `PropertyName`            | Specifies the prefix used to create the BindableProperty, if `PropertyName` is null, then will take the name of the field removing the underscores and using PascalCase. Example: `_tex_t` will be transformed to `Text`. | `string`                         |
+| `OnChanged`               | Specifies the name of the method to be executed when the property changed. | `string`                         |
+| `DefaultValue`            | Specifies the "text/value" that will be used as default. Example: `default(string)`| `string`                         |
+| `DefaultBindingMode`      | Specifies the "BindingMode" as string that will be used as default.  Options: `Default/TwoWay/OneWay/OneWayToSource/OneTime`.  Example: `nameof(BindingMode.TwoWay)`| `string`                         |
+| `HidesUnderlyingProperty` | Specifies if the BindingProperty will hide the current implementation.       | `bool`                           |
+| `ValidateValue`           | Specifies the name of the method to be executed to validate the values.       | `string`                         |
+
+## Usage - **PropertyName**
+Just decorate the field with the Bindable attribute.
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -51,7 +62,7 @@ Just decorate field with the Bindable attribute.
     public partial class CustomEntry : ContentView
     {
         [AutoBindable(PropertyName = "Text")]
-        private string _t;
+        private readonly string _t;
     }
 ```
 the prevoius code will generate this:
@@ -73,10 +84,10 @@ the prevoius code will generate this:
     }
 ```
 
-## Usage - OnChanged method 
+## Usage - **OnChanged**
 
 ### Example 1 - No Parameters
-Just decorate field with the Bindable attribute.
+Just decorate the field with the Bindable attribute.
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -84,7 +95,7 @@ Just decorate field with the Bindable attribute.
     public partial class HeaderControl : ContentView
     {
         [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
-        private string _firstName;
+        private readonly string _firstName;
 
         private void UpdateDisplayName()
         { 
@@ -119,7 +130,7 @@ the prevoius code will generate this:
 ```
 
 ### Example 2 - One Parameter
-Just decorate field with the Bindable attribute. The 'UpdateDisplayName' method must have only one parameter (must match the type of the field)
+Just decorate the field with the Bindable attribute. The 'UpdateDisplayName' method must have only one parameter (must match the type of the field)
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -127,7 +138,7 @@ Just decorate field with the Bindable attribute. The 'UpdateDisplayName' method 
     public partial class HeaderControl : ContentView
     {
         [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
-        private string _firstName;
+        private readonly string _firstName;
 
         private void UpdateDisplayName(string newValue)
         { 
@@ -162,7 +173,7 @@ the prevoius code will generate this:
 ```
 
 ### Example 3 - Two Parameters
-Just decorate field with the Bindable attribute. The 'UpdateDisplayName' method must have two parameters (must match the type of the field)
+Just decorate the field with the Bindable attribute. The 'UpdateDisplayName' method must have two parameters (must match the type of the field)
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -170,7 +181,7 @@ Just decorate field with the Bindable attribute. The 'UpdateDisplayName' method 
     public partial class HeaderControl : ContentView
     {
         [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
-        private string _firstName;
+        private readonly string _firstName;
 
         private void UpdateDisplayName(string oldValue, string newValue)
         { 
@@ -204,10 +215,10 @@ the prevoius code will generate this:
     }
 ```
 
-## Usage - Set default value
+## Usage - **DefaultValue**
 
 ### Example 1 - DateTime
-Just decorate field with the Bindable attribute and add the "text/value" that you want to use as default value.
+Just decorate the field with the Bindable attribute and add the "text/value" that you want to use as default value.
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -215,7 +226,7 @@ Just decorate field with the Bindable attribute and add the "text/value" that yo
     public partial class HeaderControl : ContentView
     {
         [AutoBindable(DefaultValue = "DateTime.Now")]
-        private DateTime _birthDate;
+        private readonly DateTime _birthDate;
     }
 ```
 the prevoius code will generate this:
@@ -238,7 +249,7 @@ the prevoius code will generate this:
 ```
 
 ### Example 2 - String
-Just decorate field with the Bindable attribute and add the "text/value" that you want to use as default value.
+Just decorate the field with the Bindable attribute and add the "text/value" that you want to use as default value.
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -246,7 +257,7 @@ Just decorate field with the Bindable attribute and add the "text/value" that yo
     public partial class HeaderControl : ContentView
     {
         [AutoBindable(DefaultValue = "USA")]
-        private string _country;
+        private readonly string _country;
     }
 ```
 the prevoius code will generate this:
@@ -268,8 +279,8 @@ the prevoius code will generate this:
     }
 ```
 
-## Usage - Set default BindingMode
-Just decorate field with the Bindable attribute and add the "BindingMode" that you want to use as default value.
+## Usage - **DefaultBindingMode**
+Just decorate the field with the Bindable attribute and add the "BindingMode" that you want to use as default value.
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -277,7 +288,7 @@ Just decorate field with the Bindable attribute and add the "BindingMode" that y
     public partial class HeaderControl : ContentView
     {
         [AutoBindable(DefaultBindingMode = nameof(BindingMode.TwoWay))]
-        private string _firstName;
+        private readonly string _firstName;
     }
 ```
 the prevoius code will generate this:
@@ -300,8 +311,8 @@ the prevoius code will generate this:
     }
 ```
 
-## Usage - Hide existing BindableProperties
-Just decorate field with the Bindable attribute and set "HidesUnderlyingProperty = true".
+## Usage - **HidesUnderlyingProperty**
+Just decorate the field with the Bindable attribute and set "HidesUnderlyingProperty = true".
 
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -330,13 +341,106 @@ the prevoius code will generate this:
     }
 ```
 
+## Usage - **ValidateValue**
+### Example 1 - Non-Static Method
+Just decorate the field with the Bindable attribute. The 'ValidateNotNull' method must have two parameters (one of type BindableObject and the second one must be the same as the field)
+
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class HeaderControl : ContentView
+    {
+        [AutoBindable(ValidateValue = nameof(ValidateIsNullOrEmpty))]
+        private readonly string? _country;
+
+        private bool ValidateIsNullOrEmpty(BindableObject _, string? value)
+        {
+            // Do stuff here
+            return !string.IsNullOrEmpty(value);
+        }
+    }
+```
+the prevoius code will generate this:
+```csharp
+    public partial class HeaderControl
+    {
+        public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty =
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(Country),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                validateValue: __ValidateIsNullOrEmpty);
+
+        public string? Country
+        {
+            get => (string?)GetValue(CountryProperty);
+            set => SetValue(CountryProperty, value);
+        }
+
+        private static bool __ValidateIsNullOrEmpty(Microsoft.Maui.Controls.BindableObject bindable, object value)
+        {
+            var ctrl = (HeaderControl)bindable;
+            return ctrl.ValidateIsNullOrEmpty(ctrl, (string?)value);
+        }
+    }
+```
+### Example 2 - Static Method
+Just decorate the field with the Bindable attribute. The 'ValidateNotNull' method must have two parameters (one of type BindableObject and the second one must be object type)
+
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class HeaderControl : ContentView
+    {
+        [AutoBindable(ValidateValue = nameof(ValidateNotNull))]
+        private readonly string? _country;
+
+        private static bool ValidateNotNull(BindableObject _, object value) => value != null;
+    }
+```
+the prevoius code will generate this:
+```csharp
+    public partial class HeaderControl
+    {
+        public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty =
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(Country),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string?),
+                                                                validateValue: ValidateNotNull);
+
+        public string? Country
+        {
+            get => (string?)GetValue(CountryProperty);
+            set => SetValue(CountryProperty, value);
+        }
+    }
+```
+
+## Do you want to remove the compiler warning CS0169 ?
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class HeaderControl : ContentView
+    {
+        #pragma warning disable CS0169
+
+        [AutoBindable]
+        private readonly string? _country;
+
+        #pragma warning restore CS0169
+    }
+```
+
 ## Project status
 
-- ✅ Simple implementation - Done
-- ✅ Custom property name - Done
-- ✅ Custom Parameters - Done
-- ✅ OnChanged method - Done
-- ✅ OnChanged method overloading - Done
+- ✅ `PropertyName` - Done
+- ✅ `OnChanged` - Done
+- ✅ `DefaultValue` - Done
+- ✅ `DefaultBindingMode` - Done
+- ✅ `HidesUnderlyingProperty` - Done
+- ✅ `ValidateValue` - Done
 
 ## Extra info
 This repo is using part of the code of [CodeWriter](https://github.com/SaladLab/CodeWriter "CodeWriter") to generate the CSharp files, thanks to the author.

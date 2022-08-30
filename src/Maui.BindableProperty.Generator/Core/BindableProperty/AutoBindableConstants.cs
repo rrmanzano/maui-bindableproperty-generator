@@ -20,6 +20,8 @@
 
         public const string AttrDefaultValue = "DefaultValue";
 
+        public const string AttrValidateValue = "ValidateValue";
+
         public const string AttrDefaultBindingMode = "DefaultBindingMode";
 
         public const string AttrHidesUnderlyingProperty = "HidesUnderlyingProperty";

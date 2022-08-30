@@ -14,7 +14,8 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
         private readonly List<Type> TypeImplementations = new() {
             typeof(DefaultValue),
             typeof(PropertyChanged),
-            typeof(DefaultBindingMode)
+            typeof(DefaultBindingMode),
+            typeof(ValidateValue)
         };
         private readonly List<IImplementation> Implementations = new();
 
@@ -37,6 +38,8 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
                 public string? DefaultValue { get; set; }
 
                 public string? DefaultBindingMode { get; set; }
+
+                public string? ValidateValue { get; set; }
 
                 public bool HidesUnderlyingProperty { get; set; } = false;
             }

@@ -4,6 +4,14 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
     public partial class HeaderControl : VerticalStackLayout
     {
+        private static bool ValidateNotNull(BindableObject _, object value) => value != null;
+
+        private bool ValidateIsNullOrEmpty(BindableObject _, string? value)
+        {
+            // Do stuff here
+            return !string.IsNullOrEmpty(value);
+        }
+
         #pragma warning disable CS0169
 
         [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
@@ -15,8 +23,11 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         [AutoBindable(DefaultValue = "DateTime.Now", OnChanged = nameof(OnDateTimeChanged))]
         private readonly DateTime? _birthDate;
 
-        [AutoBindable(DefaultValue = "USA")]
+        [AutoBindable(DefaultValue = "USA", ValidateValue = nameof(ValidateIsNullOrEmpty))]
         private readonly string? _country;
+
+        [AutoBindable(ValidateValue = nameof(ValidateNotNull))]
+        private readonly string? _zipCode;
 
         [AutoBindable]
         private readonly string? _displayName;
@@ -46,11 +57,6 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             }
 
             this.DisplayName = name.Trim();
-        }
-
-        private void UpdateDisplayName(string newValue)
-        {
-            // Do stuff here
         }
 
         private void UpdateDisplayName(string oldValue, string newValue)

@@ -29,6 +29,10 @@
     <Entry
         Text="{Binding Source={x:Reference this},Path=Country}" />
 
+    <Label Text="ZipCode"/>
+    <Entry
+        Text="{Binding Source={x:Reference this},Path=ZipCode}" />
+
     <Label 
         Text="Full Name : " />
     <Label
