@@ -31,7 +31,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
                     {
                         if (value == string.Empty)
                         {
-                            return "string.empty";
+                            return "string.Empty";
                         }
 
                         return $"\"{value}\"";
