@@ -43,7 +43,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
                 return default;
             });
 
-            return defaultValue != null ? $"defaultValue: {defaultValue}" : $"defaultValue: default({fieldType})";
+            return defaultValue != null ? $"defaultValue: {defaultValue}" : $"defaultValue: default({fieldType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)})";
         }
 
         public void ProcessBodySetter(CodeWriter w)

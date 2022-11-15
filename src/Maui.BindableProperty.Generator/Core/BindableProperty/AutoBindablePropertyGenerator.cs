@@ -67,7 +67,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             w._("#nullable enable");
             using (w.B(@$"namespace {namespaceName}"))
             {
-                using (w.B(@$"public partial class {classSymbol.Name}"))
+                using (w.B(@$"public partial class {classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}"))
                 {
                     // Create properties for each field 
                     foreach (IFieldSymbol fieldSymbol in fields)
@@ -101,7 +101,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var applyHidesUnderlying = fieldSymbol.GetValue<bool>(attributeSymbol, AutoBindableConstants.AttrHidesUnderlyingProperty);
             var hidesUnderlying = applyHidesUnderlying ? " new" : string.Empty;
             var declaringType = fieldType.WithNullableAnnotation(NullableAnnotation.None);
-            var parameters = $"nameof({propertyName}),typeof({declaringType}),typeof({classSymbol.Name}){customParameters}".Split(',');
+            var parameters = $"nameof({propertyName}),typeof({declaringType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}),typeof({classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}){customParameters}".Split(',');
 
             w._(AttributeBuilder.GetAttrGeneratedCodeString());
             w._($@"public static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} =");
@@ -116,9 +116,9 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
             w._();
             AttributeBuilder.WriteAllAttrGeneratedCodeStrings(w);
-            using (w.B(@$"public{hidesUnderlying} {fieldType} {propertyName}"))
+            using (w.B(@$"public{hidesUnderlying} {fieldType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} {propertyName}"))
             {
-                w._($@"get => ({fieldType})GetValue({bindablePropertyName});");
+                w._($@"get => ({fieldType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)})GetValue({bindablePropertyName});");
                 if (this.ExistsBodySetter())
                 {
                     using (w.B(@$"set"))

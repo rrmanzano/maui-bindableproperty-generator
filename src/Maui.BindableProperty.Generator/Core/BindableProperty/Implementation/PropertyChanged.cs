@@ -48,7 +48,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
                     var methods = this.GetMethodsToCall(methodName);
                     if (methods.Any())
                     {
-                        w._($@"var ctrl = ({this.ClassSymbol.Name})bindable;");
+                        w._($@"var ctrl = ({this.ClassSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)})bindable;");
                         methods.ToList().ForEach(m => {
                             var count = m.Parameters.Count();
                             if (count == 0)

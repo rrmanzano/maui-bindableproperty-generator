@@ -59,7 +59,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
                 AttributeBuilder.WriteAllAttrGeneratedCodeStrings(w);
                 using (w.B(methodDefinition))
                 {
-                    w._($@"var ctrl = ({this.ClassSymbol.Name})bindable;");
+                    w._($@"var ctrl = ({this.ClassSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)})bindable;");
                     w._($@"return ctrl.{methodName}(ctrl, ({this.FieldSymbol.Type})value);");
                 }
 

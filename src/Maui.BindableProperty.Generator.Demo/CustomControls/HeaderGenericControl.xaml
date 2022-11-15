@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<VerticalStackLayout xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Maui.BindableProperty.Generator.Demo.CustomControls.HeaderGenericControl"
+    x:Name="this">
+
+    <VerticalStackLayout.Resources>
+
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Margin"  Value="0,10,0,0" />
+        </Style>
+
+    </VerticalStackLayout.Resources>
+        
+</VerticalStackLayout>
