@@ -101,7 +101,7 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
             var applyHidesUnderlying = fieldSymbol.GetValue<bool>(attributeSymbol, AutoBindableConstants.AttrHidesUnderlyingProperty);
             var hidesUnderlying = applyHidesUnderlying ? " new" : string.Empty;
             var declaringType = fieldType.WithNullableAnnotation(NullableAnnotation.None);
-            var parameters = $"nameof({propertyName}),typeof({declaringType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)}),typeof({classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}){customParameters}".Split(',');
+            var parameters = $"nameof({propertyName}),typeof({declaringType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)}),typeof({classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}){customParameters}".Split(',');
 
             w._(AttributeBuilder.GetAttrGeneratedCodeString());
             w._($@"public static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} =");
@@ -116,9 +116,9 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty
 
             w._();
             AttributeBuilder.WriteAllAttrGeneratedCodeStrings(w);
-            using (w.B(@$"public{hidesUnderlying} {fieldType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)} {propertyName}"))
+            using (w.B(@$"public{hidesUnderlying} {fieldType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)} {propertyName}"))
             {
-                w._($@"get => ({fieldType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)})GetValue({bindablePropertyName});");
+                w._($@"get => ({fieldType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})GetValue({bindablePropertyName});");
                 if (this.ExistsBodySetter())
                 {
                     using (w.B(@$"set"))
