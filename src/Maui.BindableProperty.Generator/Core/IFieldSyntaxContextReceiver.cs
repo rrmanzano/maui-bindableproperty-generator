@@ -1,9 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 
-namespace Maui.BindableProperty.Generator.Core
+namespace Maui.BindableProperty.Generator.Core;
+
+internal interface IFieldSyntaxContextReceiver
 {
-    internal interface IFieldSyntaxContextReceiver
-    {
-        List<IFieldSymbol> Fields { get; }
-    }
+    List<IFieldSymbol> Fields { get; }
 }

@@ -2,58 +2,57 @@
 using Maui.BindableProperty.Generator.Helpers;
 using Microsoft.CodeAnalysis;
 
-namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation
+namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation;
+
+public class DefaultValue : IImplementation
 {
-    public class DefaultValue : IImplementation
+    private TypedConstant DefaultValueProperty { get; set; }
+    private IFieldSymbol FieldSymbol { get; set; }
+
+    public DefaultValue(IFieldSymbol fieldSymbol, ISymbol attributeSymbol)
     {
-        private TypedConstant DefaultValueProperty { get; set; }
-        private IFieldSymbol FieldSymbol { get; set; }
+        this.DefaultValueProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrDefaultValue);
+        this.FieldSymbol = fieldSymbol;
+    }
 
-        public DefaultValue(IFieldSymbol fieldSymbol, ISymbol attributeSymbol)
-        {
-            this.DefaultValueProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrDefaultValue);
-            this.FieldSymbol = fieldSymbol;
-        }
+    public bool SetterImplemented()
+    {
+        return false;
+    }
 
-        public bool SetterImplemented()
+    public string ProcessBindableParameters()
+    {
+        var fieldType = this.FieldSymbol.Type;
+        var defaultValue = this.DefaultValueProperty.GetValue<string>(value =>
         {
-            return false;
-        }
-
-        public string ProcessBindableParameters()
-        {
-            var fieldType = this.FieldSymbol.Type;
-            var defaultValue = this.DefaultValueProperty.GetValue<string>(value =>
+            if (value != null)
             {
-                if (value != null)
+                if (fieldType.IsStringType())
                 {
-                    if (fieldType.IsStringType())
+                    if (value == string.Empty)
                     {
-                        if (value == string.Empty)
-                        {
-                            return "string.Empty";
-                        }
-
-                        return $"\"{value}\"";
+                        return "string.Empty";
                     }
 
-                    return value;
+                    return $"\"{value}\"";
                 }
 
-                return default;
-            });
+                return value;
+            }
 
-            return defaultValue != null ? $"defaultValue: {defaultValue}" : $"defaultValue: default({fieldType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})";
-        }
+            return default;
+        });
 
-        public void ProcessBodySetter(CodeWriter w)
-        {
-            // Not implemented
-        }
+        return defaultValue != null ? $"defaultValue: {defaultValue}" : $"defaultValue: default({fieldType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})";
+    }
 
-        public void ProcessImplementationLogic(CodeWriter w)
-        {
-            // Not implemented
-        }
+    public void ProcessBodySetter(CodeWriter w)
+    {
+        // Not implemented
+    }
+
+    public void ProcessImplementationLogic(CodeWriter w)
+    {
+        // Not implemented
     }
 }

@@ -1,24 +1,23 @@
 ﻿using System;
 
 // Based on https://github.com/SaladLab/CodeWriter
-namespace Maui.BindableProperty.Generator
+namespace Maui.BindableProperty.Generator;
+
+public sealed class UsingHandle : IDisposable
 {
-    public sealed class UsingHandle : IDisposable
+    private Action _disposed;
+
+    public UsingHandle(Action disposed)
     {
-        private Action _disposed;
+        _disposed = disposed;
+    }
 
-        public UsingHandle(Action disposed)
+    public void Dispose()
+    {
+        if (_disposed != null)
         {
-            _disposed = disposed;
-        }
-
-        public void Dispose()
-        {
-            if (_disposed != null)
-            {
-                _disposed();
-                _disposed = null;
-            }
+            _disposed();
+            _disposed = null;
         }
     }
 }
