@@ -4,6 +4,7 @@ using System.Text;
 using Maui.BindableProperty.Generator.Helpers;
 using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation;
 using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation.Interfaces;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Maui.BindableProperty.Generator.Core.BindableProperty;
 
@@ -25,6 +26,44 @@ public class AutoBindablePropertyGenerator : ISourceGenerator
         using System;
         namespace Maui.BindableProperty.Generator.Core
         {
+            public enum BindablePropertyAccessibility
+            {
+                /// <summary>
+                /// If 'Undefined', bindable property will be defined in the same way as the class that contains it.
+                /// </summary>
+                Undefined = 0,
+
+                /// <summary>
+                /// Bindable property will be defined as 'private'
+                /// </summary>
+                Private = 1,
+
+                /// <summary>
+                /// Bindable property will be defined as 'private protected'
+                /// </summary>
+                ProtectedAndInternal = 2,
+
+                /// <summary>
+                /// Bindable property will be defined as 'protected'
+                /// </summary>
+                Protected = 3,
+
+                /// <summary>
+                /// Bindable property will be defined as 'internal'
+                /// </summary>
+                Internal = 4,
+
+                /// <summary>
+                /// Bindable property will be defined as 'protected internal'  
+                /// </summary>     
+                ProtectedOrInternal = 5,
+
+                /// <summary>
+                /// Bindable property will be defined as 'public'  
+                /// </summary>
+                Public = 6
+            }
+
             [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
             [System.Diagnostics.Conditional(""AutoBindableGenerator_DEBUG"")]
             public sealed class AutoBindableAttribute : Attribute
@@ -42,6 +81,8 @@ public class AutoBindablePropertyGenerator : ISourceGenerator
                 public string? ValidateValue { get; set; }
 
                 public bool HidesUnderlyingProperty { get; set; } = false;
+
+                public BindablePropertyAccessibility PropertyAccessibility { get; set; } = BindablePropertyAccessibility.Undefined;
             }
         }";
 
@@ -107,7 +148,8 @@ public class AutoBindablePropertyGenerator : ISourceGenerator
         w._("#nullable enable");
         using (w.B(@$"namespace {namespaceName}"))
         {
-            using (w.B(@$"public partial class {classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}"))
+            var classAccessibility = SyntaxFacts.GetText(classSymbol.DeclaredAccessibility);
+            using (w.B(@$"{classAccessibility} partial class {classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}"))
             {
                 // Create properties for each field 
                 foreach (IFieldSymbol fieldSymbol in fields)
@@ -182,9 +224,14 @@ public class AutoBindablePropertyGenerator : ISourceGenerator
         var hidesUnderlying = applyHidesUnderlying ? " new" : string.Empty;
         var declaringType = fieldType.WithNullableAnnotation(NullableAnnotation.None);
         var parameters = $"nameof({propertyName}),typeof({declaringType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)}),typeof({classSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat)}){customParameters}".Split(',');
+        var propertyDeclaredAccessibility = fieldSymbol.GetValue<int>(attributeSymbol, AutoBindableConstants.AttrPropertyAccessibility);
+        var propertyAccessibility =
+                    propertyDeclaredAccessibility == 0
+                        ? SyntaxFacts.GetText(classSymbol.DeclaredAccessibility)
+                        : SyntaxFacts.GetText((Accessibility)propertyDeclaredAccessibility);
 
         w._(AttributeBuilder.GetAttrGeneratedCodeString());
-        w._($@"public static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} =");
+        w._($@"{propertyAccessibility} static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} =");
         w._($"{w.GetIndentString(6)}{AutoBindableConstants.FullNameMauiControls}.BindableProperty.Create(");
 
         for (int i = 0; i < parameters.Length; i++)
@@ -196,7 +243,7 @@ public class AutoBindablePropertyGenerator : ISourceGenerator
 
         w._();
         AttributeBuilder.WriteAllAttrGeneratedCodeStrings(w);
-        using (w.B(@$"public{hidesUnderlying} {fieldType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)} {propertyName}"))
+        using (w.B(@$"{propertyAccessibility}{hidesUnderlying} {fieldType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)} {propertyName}"))
         {
             w._($@"get => ({fieldType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})GetValue({bindablePropertyName});");
             if (this.ExistsBodySetter())

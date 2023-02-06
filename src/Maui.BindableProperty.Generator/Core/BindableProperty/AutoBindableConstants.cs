@@ -43,4 +43,6 @@ public class AutoBindableConstants
     public const string AttrDefaultBindingMode = "DefaultBindingMode";
 
     public const string AttrHidesUnderlyingProperty = "HidesUnderlyingProperty";
+
+    public const string AttrPropertyAccessibility = "PropertyAccessibility";
 }

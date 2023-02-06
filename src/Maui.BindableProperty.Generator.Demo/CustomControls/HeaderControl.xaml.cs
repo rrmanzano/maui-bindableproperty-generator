@@ -32,6 +32,9 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         [AutoBindable]
         private readonly string? _displayName;
 
+        [AutoBindable(PropertyAccessibility = BindablePropertyAccessibility.ProtectedOrInternal)]
+        private readonly string? _age;
+
         [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "Color.FromArgb(\"#cc3340\")")]
         private readonly Color _backgroundColor = Color.FromArgb("#cc3340");
 
