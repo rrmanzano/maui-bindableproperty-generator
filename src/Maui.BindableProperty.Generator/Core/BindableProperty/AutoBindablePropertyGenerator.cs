@@ -5,12 +5,12 @@ using Maui.BindableProperty.Generator.Helpers;
 using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation;
 using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation.Interfaces;
 using Microsoft.CodeAnalysis.CSharp;
+using System.Diagnostics;
 
 namespace Maui.BindableProperty.Generator.Core.BindableProperty;
 
-
 [Generator]
-public class AutoBindablePropertyGenerator : ISourceGenerator
+public class AutoBindablePropertyGenerator : IncrementalGeneratorBase, IIncrementalGenerator
 {
     private readonly List<Type> TypeImplementations = new() {
         typeof(DefaultValue),
@@ -86,40 +86,11 @@ public class AutoBindablePropertyGenerator : ISourceGenerator
             }
         }";
 
-    public void Execute(GeneratorExecutionContext context)
-    {
-        context.EachClass<AutoBindableSyntaxReceiver>(AutoBindableConstants.AttrClassDisplayString, (attributeSymbol, group) => {
-            var classNamedTypeSymbol = group.Key;
-            try
-            {
-                var classSource = this.ProcessClass(classNamedTypeSymbol, group.ToList(), attributeSymbol, context);
-                if (string.IsNullOrEmpty(classSource))
-                    return;
-
-                context.AddSource($"{classNamedTypeSymbol.Name}.generated.cs", SourceText.From(classSource, Encoding.UTF8));
-            }
-            catch (Exception e)
-            {
-                context.ReportDiagnostic(
-                    Diagnostic.Create(
-                        new DiagnosticDescriptor(
-                            AutoBindableConstants.ExceptionMBPG001Id,
-                            AutoBindableConstants.ExceptionTitle,
-                            AutoBindableConstants.ExceptionMBPG001Message,
-                            AutoBindableConstants.ProjectName,
-                            DiagnosticSeverity.Error,
-                            isEnabledByDefault: true
-                        ),
-                        classNamedTypeSymbol.Locations.FirstOrDefault(),
-                        classNamedTypeSymbol.ToDisplayString(),
-                        e.ToString()
-                    )
-                );
-            }
-        });
-    }
-
-    private string ProcessClass(INamedTypeSymbol classSymbol, List<IFieldSymbol> fields, ISymbol attributeSymbol, GeneratorExecutionContext context)
+    private string ProcessClass(
+        INamedTypeSymbol classSymbol,
+        List<IFieldSymbol> fields,
+        ISymbol attributeSymbol,
+        SourceProductionContext context)
     {
         if (!classSymbol.ContainingSymbol.Equals(classSymbol.ContainingNamespace, SymbolEqualityComparer.Default))
         {
@@ -189,7 +160,7 @@ public class AutoBindablePropertyGenerator : ISourceGenerator
         IFieldSymbol fieldSymbol,
         ISymbol attributeSymbol,
         INamedTypeSymbol classSymbol,
-        GeneratorExecutionContext context)
+        SourceProductionContext context)
     {
         // Get the name and type of the field
         var fieldName = fieldSymbol.Name;
@@ -319,12 +290,40 @@ public class AutoBindablePropertyGenerator : ISourceGenerator
         return fieldName.Substring(0, 1).ToUpper() + fieldName.Substring(1);
     }
 
-    public void Initialize(GeneratorInitializationContext context)
+    public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        // Register the attribute source
-        context.RegisterForPostInitialization((i) => i.AddSource(AutoBindableConstants.AttrName, attributeText));
+        this.Initialize(
+            context,
+            SourceText.From(attributeText, Encoding.UTF8),
+            (attributeSymbol, group, spc) => {
+                var classNamedTypeSymbol = group.Key;
+                try
+                {
+                    var classSource = this.ProcessClass(classNamedTypeSymbol, group.ToList(), attributeSymbol, spc);
+                    if (string.IsNullOrEmpty(classSource))
+                        return;
 
-        // Register a syntax receiver that will be created for each generation pass
-        context.RegisterForSyntaxNotifications(() => new AutoBindableSyntaxReceiver());
+                    spc.AddSource($"{classNamedTypeSymbol.Name}.generated.cs", SourceText.From(classSource, Encoding.UTF8));
+                }
+                catch (Exception e)
+                {
+                    spc.ReportDiagnostic(
+                        Diagnostic.Create(
+                            new DiagnosticDescriptor(
+                                AutoBindableConstants.ExceptionMBPG001Id,
+                                AutoBindableConstants.ExceptionTitle,
+                                AutoBindableConstants.ExceptionMBPG001Message,
+                                AutoBindableConstants.ProjectName,
+                                DiagnosticSeverity.Error,
+                                isEnabledByDefault: true
+                            ),
+                            classNamedTypeSymbol.Locations.FirstOrDefault(),
+                            classNamedTypeSymbol.ToDisplayString(),
+                            e.ToString()
+                        )
+                    );
+                }
+            }
+        );
     }
 }
