@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32317.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.BindableProperty.Generator", "MAUI.BindableProperty.Generator\Maui.BindableProperty.Generator.csproj", "{E98B8D15-3877-436D-BCBC-ECF0FAB95E7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maui.BindableProperty.Generator.Demo", "Maui.BindableProperty.Generator.Demo\Maui.BindableProperty.Generator.Demo.csproj", "{2EEC7AD4-2A9E-4895-96D6-835855DB8D56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Maui.BindableProperty.Generator.Demo", "Maui.BindableProperty.Generator.Demo\Maui.BindableProperty.Generator.Demo.csproj", "{2EEC7AD4-2A9E-4895-96D6-835855DB8D56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maui.BindableProperty.Generator.Tests", "Maui.BindableProperty.Generator.Tests\Maui.BindableProperty.Generator.Tests.csproj", "{5CBB1B25-311D-4996-823F-952D60000FE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{2EEC7AD4-2A9E-4895-96D6-835855DB8D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EEC7AD4-2A9E-4895-96D6-835855DB8D56}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2EEC7AD4-2A9E-4895-96D6-835855DB8D56}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5CBB1B25-311D-4996-823F-952D60000FE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CBB1B25-311D-4996-823F-952D60000FE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CBB1B25-311D-4996-823F-952D60000FE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CBB1B25-311D-4996-823F-952D60000FE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
