@@ -52,6 +52,7 @@ the prevoius code will generate this:
 | `DefaultBindingMode`      | Specifies the "BindingMode" as string that will be used as default.  Options: `Default/TwoWay/OneWay/OneWayToSource/OneTime`.  Example: `nameof(BindingMode.TwoWay)`| `string`                         |
 | `HidesUnderlyingProperty` | Specifies if the BindingProperty will hide the current implementation.       | `bool`                           |
 | `ValidateValue`           | Specifies the name of the method to be executed to validate the values.       | `string`                         |
+| `PropertyAccessibility`   | Specifies the property accessibility, if no parameter is specified, what is defined in the class will be used, Options: `Private/ProtectedAndInternal/Protected/Internal/ProtectedOrInternal/Public`. Example: `BindablePropertyAccessibility.ProtectedOrInternal`       | `BindablePropertyAccessibility`                         |
 
 ## Usage - **PropertyName**
 Just decorate the field with the Bindable attribute.
@@ -418,6 +419,37 @@ the prevoius code will generate this:
     }
 ```
 
+## Usage - **PropertyAccessibility**
+Just decorate the field with the Bindable attribute and set "PropertyAccessibility = Private/ProtectedAndInternal/Protected/Internal/ProtectedOrInternal/Public".
+
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class HeaderControl : ContentView
+    {
+        [AutoBindable(PropertyAccessibility = BindablePropertyAccessibility.ProtectedOrInternal)]
+        private readonly string? _age;
+    }
+```
+the prevoius code will generate this:
+```csharp
+    public partial class HeaderControl
+    {
+        protected internal static readonly Microsoft.Maui.Controls.BindableProperty AgeProperty =
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(Age),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string?));
+
+        protected internal string? Age
+        {
+            get => (string?)GetValue(AgeProperty);
+            set => SetValue(AgeProperty, value);
+        }
+    }
+```
+
 ## Do you want to remove the compiler warning CS0169 ?
 ```csharp
     using Maui.BindableProperty.Generator.Core;
@@ -441,6 +473,10 @@ the prevoius code will generate this:
 - ✅ `DefaultBindingMode` - Done
 - ✅ `HidesUnderlyingProperty` - Done
 - ✅ `ValidateValue` - Done
+- ✅ `PropertyAccessibility` - Done
+- 🔳 Allow nested class - In Progress
+- 🔳 Add Attributes Property - Pending
+
 
 ## Extra info
 This repo is using part of the code of [CodeWriter](https://github.com/SaladLab/CodeWriter "CodeWriter") to generate the CSharp files, thanks to the author.
