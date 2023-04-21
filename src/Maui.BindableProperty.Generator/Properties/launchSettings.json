@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Debug": {
+      "commandName": "DebugRoslynComponent",
+      "targetProject": "..\\Maui.BindableProperty.Generator.Demo\\Maui.BindableProperty.Generator.Demo.csproj"
+    }
+  }
+}

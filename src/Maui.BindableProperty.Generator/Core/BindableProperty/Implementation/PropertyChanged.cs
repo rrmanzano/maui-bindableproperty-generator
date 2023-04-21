@@ -7,12 +7,18 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation;
 public class PropertyChanged : IImplementation
 {
     private TypedConstant OnChangedProperty { get; set; }
+
+    protected string PropertyName { get; set; }
+
     private IFieldSymbol FieldSymbol { get; set; }
     private INamedTypeSymbol ClassSymbol { get; set; }
 
     public PropertyChanged(IFieldSymbol fieldSymbol, ISymbol attributeSymbol, INamedTypeSymbol classSymbol)
     {
         this.OnChangedProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrOnChanged);
+        var nameProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrPropertyName);
+
+        this.PropertyName = AutoBindablePropertyGenerator.ChooseName(fieldSymbol.Name, nameProperty);
         this.FieldSymbol = fieldSymbol;
         this.ClassSymbol = classSymbol;
     }
@@ -22,11 +28,9 @@ public class PropertyChanged : IImplementation
         return false;
     }
 
-    public string ProcessBindableParameters()
+    public virtual string ProcessBindableParameters()
     {
-        return this.OnChangedProperty.GetValue<string>(methodName => {
-            return $@"propertyChanged: __{methodName}";
-        });
+        return $@"propertyChanged: {GetInternalMethodName()}";
     }
 
     public void ProcessBodySetter(CodeWriter w)
@@ -34,38 +38,53 @@ public class PropertyChanged : IImplementation
         // Not implemented
     }
 
-    public void ProcessImplementationLogic(CodeWriter w)
+    protected virtual string GetInternalMethodName()
     {
-        this.OnChangedProperty.GetValue<string>(methodName => {
-            var methodDefinition = @$"private static void __{methodName}({AutoBindableConstants.FullNameMauiControls}.BindableObject bindable, object oldValue, object newValue)";
-
-            if (w.ToString().Contains(methodDefinition))
-                return default;
-
-            AttributeBuilder.WriteAllAttrGeneratedCodeStrings(w);
-            using (w.B(methodDefinition))
-            {
-                var methods = this.GetMethodsToCall(methodName);
-                if (methods.Any())
-                {
-                    w._($@"var ctrl = ({this.ClassSymbol.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})bindable;");
-                    methods.ToList().ForEach(m => {
-                        var count = m.Parameters.Count();
-                        if (count == 0)
-                            w._($@"ctrl.{methodName}();");
-                        else if (count == 1)
-                            w._($@"ctrl.{methodName}(({this.FieldSymbol.Type})newValue);");
-                        else if (count == 2)
-                            w._($@"ctrl.{methodName}(({this.FieldSymbol.Type})oldValue, ({this.FieldSymbol.Type})newValue);");
-                    });
-                }
-            }
-
-            return default;
-        });
+        return $@"__{this.PropertyName}Changed";
     }
 
-    private IEnumerable<IMethodSymbol> GetMethodsToCall(string methodName)
+    protected virtual string GetMethodName()
+    {
+        return $@"On{this.PropertyName}Changed";
+    }
+
+    public void ProcessImplementationLogic(CodeWriter w)
+    {
+        var innerMethodName = GetInternalMethodName();
+
+        var methodName = GetMethodName();
+        var methodDefinition = @$"private static void {innerMethodName}({AutoBindableConstants.FullNameMauiControls}.BindableObject bindable, object oldValue, object newValue)";
+
+        if (w.ToString().Contains(methodDefinition))
+            return;
+
+        AttributeBuilder.WriteAllAttrGeneratedCodeStrings(w);
+        using (w.B(methodDefinition))
+        {
+            w._($@"var ctrl = ({this.ClassSymbol.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})bindable;");
+            this.OnChangedProperty.GetValue<string>((customMethodName) =>
+            {
+                var methods = this.GetMethodsToCall(customMethodName);
+                if (methods.Any())
+                {
+                    methods.ToList().ForEach(m =>
+                    {
+                        var count = m.Parameters.Count();
+                        if (count == 0)
+                            w._($@"ctrl.{customMethodName}();");
+                        else if (count == 1)
+                            w._($@"ctrl.{customMethodName}(({this.FieldSymbol.Type})newValue);");
+                        else if (count == 2)
+                            w._($@"ctrl.{customMethodName}(({this.FieldSymbol.Type})oldValue, ({this.FieldSymbol.Type})newValue);");
+                    });
+                }
+                return default;
+            });
+            w._($@"ctrl.{methodName}(({this.FieldSymbol.Type})newValue);");
+        }
+    }
+
+    protected virtual IEnumerable<IMethodSymbol> GetMethodsToCall(string methodName)
     {
         var typeSymbol = this.FieldSymbol.Type;
         var methods = this.ClassSymbol.GetMembers(methodName)

@@ -15,10 +15,17 @@
 		<RepositoryUrl>https://github.com/rrmanzano/maui-bindableproperty-generator</RepositoryUrl>
 		<PackageId>M.BindableProperty.Generator</PackageId>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
+		<IsRoslynComponent>true</IsRoslynComponent>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.1" PrivateAssets="all" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 	</ItemGroup>
 
 	<ItemGroup>
