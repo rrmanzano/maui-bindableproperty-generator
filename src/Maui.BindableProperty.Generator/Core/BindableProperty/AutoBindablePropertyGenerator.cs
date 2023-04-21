@@ -232,9 +232,6 @@ public class AutoBindablePropertyGenerator : IncrementalGeneratorBase, IIncremen
             }
         }
 
-        w._($@"partial void On{propertyName}Changed({declaringType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)} value);");
-        w._($@"partial void On{propertyName}Changing({declaringType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)} value);");
-
         this.ProcessImplementationLogic(w);
     }
 

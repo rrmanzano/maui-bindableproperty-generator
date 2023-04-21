@@ -62,7 +62,7 @@ public class PropertyChanged : IImplementation
         using (w.B(methodDefinition))
         {
             w._($@"var ctrl = ({this.ClassSymbol.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})bindable;");
-            this.OnChangedProperty.GetValue<string>((customMethodName) =>
+            if (this.OnChangedProperty.Value is string customMethodName)
             {
                 var methods = this.GetMethodsToCall(customMethodName);
                 if (methods.Any())
@@ -78,9 +78,15 @@ public class PropertyChanged : IImplementation
                             w._($@"ctrl.{customMethodName}(({this.FieldSymbol.Type})oldValue, ({this.FieldSymbol.Type})newValue);");
                     });
                 }
-                return default;
-            });
-            w._($@"ctrl.{methodName}(({this.FieldSymbol.Type})newValue);");
+            }
+            if (this.OnChangedProperty.Value is not string clashingCustomName || clashingCustomName != methodName)
+            {
+                w._($@"ctrl.{methodName}(({this.FieldSymbol.Type.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})newValue);");
+            }
+        }
+        if (this.OnChangedProperty.Value is not string clashingCustomCallName || clashingCustomCallName != methodName)
+        {
+            w._($@"partial void {methodName}({this.FieldSymbol.Type.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)} value);");
         }
     }
 
