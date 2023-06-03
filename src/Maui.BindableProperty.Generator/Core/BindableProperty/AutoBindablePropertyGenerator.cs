@@ -15,6 +15,7 @@ public class AutoBindablePropertyGenerator : IncrementalGeneratorBase, IIncremen
     private readonly List<Type> TypeImplementations = new() {
         typeof(DefaultValue),
         typeof(PropertyChanged),
+        typeof(PropertyChanging),
         typeof(DefaultBindingMode),
         typeof(ValidateValue)
     };
@@ -169,7 +170,7 @@ public class AutoBindablePropertyGenerator : IncrementalGeneratorBase, IIncremen
         var nameProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrPropertyName);
         this.InitializeImplementations(fieldSymbol, attributeSymbol, classSymbol);
 
-        var propertyName = this.ChooseName(fieldName, nameProperty);
+        var propertyName = ChooseName(fieldName, nameProperty);
         if (propertyName?.Length == 0 || propertyName == fieldName)
         {
             context.ReportDiagnostic(
@@ -273,7 +274,7 @@ public class AutoBindablePropertyGenerator : IncrementalGeneratorBase, IIncremen
         return this.Implementations.Any(i => i.SetterImplemented());
     }
 
-    private string ChooseName(string fieldName, TypedConstant overridenNameOpt)
+    internal static string ChooseName(string fieldName, TypedConstant overridenNameOpt)
     {
         if (!overridenNameOpt.IsNull)
         {
