@@ -17,7 +17,7 @@ Just decorate the field with the Bindable attribute.
 ```csharp
     using Maui.BindableProperty.Generator.Core;
 
-    public partial class CustomEntry : ContentView
+    public partial class HeaderControl : ContentView
     {
         [AutoBindable]
         private readonly string _placeholder;
@@ -25,20 +25,38 @@ Just decorate the field with the Bindable attribute.
 ```
 the prevoius code will generate this:
 ```csharp
-    public partial class CustomEntry
+    public partial class HeaderControl
     {
         public static readonly Microsoft.Maui.Controls.BindableProperty PlaceholderProperty =
-                                    Microsoft.Maui.Controls.BindableProperty.Create(
-                                                            nameof(Placeholder),
-                                                            typeof(string),
-                                                            typeof(CustomEntry),
-                                                            default(string));
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(Placeholder),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string),
+                                                                propertyChanged: __PlaceholderChanged,
+                                                                propertyChanging: __PlaceholderChanging);
 
         public string Placeholder
         {
             get => (string)GetValue(PlaceholderProperty);
             set => SetValue(PlaceholderProperty, value);
         }
+
+        private static void __PlaceholderChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (HeaderControl)bindable;
+            ctrl.OnPlaceholderChanged((string)newValue);
+        }
+
+        partial void OnPlaceholderChanged(string value);
+
+        private static void __PlaceholderChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (HeaderControl)bindable;
+            ctrl.OnPlaceholderChanging((string)newValue);
+        }
+
+        partial void OnPlaceholderChanging(string value);
     }
 ```
 
@@ -47,7 +65,8 @@ the prevoius code will generate this:
 | Option                    | Description                    | Type                             |
 | -------------             | ------------------------------ | ------------------------------   |
 | `PropertyName`            | Specifies the prefix used to create the BindableProperty, if `PropertyName` is null, then will take the name of the field removing the underscores and using PascalCase. Example: `_tex_t` will be transformed to `Text`. | `string`                         |
-| `OnChanged`               | Specifies the name of the method to be executed when the property changed. | `string`                         |
+| `OnChanged`               | Specifies the name of the method to be executed when the property changes, if not specified, will generate a partial method that will be notified when the property changed. | `string`                         |
+| `OnChanging`              | Specifies the name of the method to be executed when the property is changing, if not specified, will generate a partial method that will be notified when the property is changing. | `string`                         |
 | `DefaultValue`            | Specifies the "text/value" that will be used as default. Example: `default(string)`| `string`                         |
 | `DefaultBindingMode`      | Specifies the "BindingMode" as string that will be used as default.  Options: `Default/TwoWay/OneWay/OneWayToSource/OneTime`.  Example: `nameof(BindingMode.TwoWay)`| `string`                         |
 | `HidesUnderlyingProperty` | Specifies if the BindingProperty will hide the current implementation.       | `bool`                           |
@@ -60,28 +79,32 @@ Just decorate the field with the Bindable attribute.
 ```csharp
     using Maui.BindableProperty.Generator.Core;
 
-    public partial class CustomEntry : ContentView
+    public partial class HeaderControl : ContentView
     {
-        [AutoBindable(PropertyName = "Text")]
-        private readonly string _t;
+        [AutoBindable(PropertyName = "LastName")]
+        private readonly? string _l;
     }
 ```
 the prevoius code will generate this:
 ```csharp
-    public partial class CustomEntry
+    public partial class HeaderControl
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty TextProperty =
-                                    Microsoft.Maui.Controls.BindableProperty.Create(
-                                                            nameof(Text),
-                                                            typeof(string),
-                                                            typeof(CustomEntry),
-                                                            default(string));
+        public static readonly Microsoft.Maui.Controls.BindableProperty LastNameProperty =
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(LastName),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string?),
+                                                                propertyChanged: __LastNameChanged,
+                                                                propertyChanging: __LastNameChanging);
 
-        public string Text
+        public string? LastName
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get => (string?)GetValue(LastNameProperty);
+            set => SetValue(LastNameProperty, value);
         }
+
+        ... 
     }
 ```
 
@@ -109,12 +132,13 @@ the prevoius code will generate this:
     public partial class HeaderControl
     {
         public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
-                                    Microsoft.Maui.Controls.BindableProperty.Create(
-                                                            nameof(FirstName),
-                                                            typeof(string),
-                                                            typeof(HeaderControl),
-                                                            defaultValue: default(string),
-                                                            propertyChanged: __UpdateDisplayName);
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(FirstName),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string),
+                                                                propertyChanged: __FirstNameChanged,
+                                                                propertyChanging: __FirstNameChanging);
 
         public string FirstName
         {
@@ -122,11 +146,13 @@ the prevoius code will generate this:
             set => SetValue(FirstNameProperty, value);
         }
 
-        private static void __UpdateDisplayName(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (HeaderControl)bindable;
             ctrl.UpdateDisplayName();
         }
+
+        ...
     }
 ```
 
@@ -152,12 +178,13 @@ the prevoius code will generate this:
     public partial class HeaderControl
     {
         public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
-                                    Microsoft.Maui.Controls.BindableProperty.Create(
-                                                            nameof(FirstName),
-                                                            typeof(string),
-                                                            typeof(HeaderControl),
-                                                            defaultValue: default(string),
-                                                            propertyChanged: __UpdateDisplayName);
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(FirstName),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string),
+                                                                propertyChanged: __FirstNameChanged,
+                                                                propertyChanging: __FirstNameChanging);
 
         public string FirstName
         {
@@ -165,11 +192,13 @@ the prevoius code will generate this:
             set => SetValue(FirstNameProperty, value);
         }
 
-        private static void __UpdateDisplayName(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (HeaderControl)bindable;
             ctrl.UpdateDisplayName((string)newValue);
         }
+
+        ...
     }
 ```
 
@@ -195,12 +224,13 @@ the prevoius code will generate this:
     public partial class HeaderControl
     {
         public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
-                                    Microsoft.Maui.Controls.BindableProperty.Create(
-                                                            nameof(FirstName),
-                                                            typeof(string),
-                                                            typeof(HeaderControl),
-                                                            defaultValue: default(string),
-                                                            propertyChanged: __UpdateDisplayName);
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(FirstName),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string),
+                                                                propertyChanged: __FirstNameChanged,
+                                                                propertyChanging: __FirstNameChanging);
 
         public string FirstName
         {
@@ -208,11 +238,161 @@ the prevoius code will generate this:
             set => SetValue(FirstNameProperty, value);
         }
 
-        private static void __UpdateDisplayName(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (HeaderControl)bindable;
             ctrl.UpdateDisplayName((string)oldValue, (string)newValue);
         }
+
+        ...
+    }
+```
+
+### Example 4 - Partial method
+Just decorate the field with the Bindable attribute and by default will generated a partial method
+
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class HeaderControl : ContentView
+    {
+        [AutoBindable()]
+        private readonly string _firstName;
+
+        partial void OnFirstNameChanged(string value)
+        {
+            // Do stuff here
+        }
+    }
+```
+the prevoius code will generate this:
+```csharp
+    public partial class HeaderControl
+    {
+        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(FirstName),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string),
+                                                                propertyChanged: __FirstNameChanged,
+                                                                propertyChanging: __FirstNameChanging);
+
+        public string FirstName
+        {
+            get => (string)GetValue(FirstNameProperty);
+            set => SetValue(FirstNameProperty, value);
+        }
+
+        private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (HeaderControl)bindable;
+            ctrl.OnFirstNameChanged((string)newValue);
+        }
+
+        partial void OnFirstNameChanged(string value);
+
+        ...
+    }
+```
+
+## Usage - **OnChanging**
+
+### Example 1
+Just decorate the field with the Bindable attribute.
+
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class HeaderControl : ContentView
+    {
+        [AutoBindable(OnChanging = nameof(UpdateDisplayNameBeforeChange))]
+        private readonly string _firstName = string.Empty;
+
+        private void UpdateDisplayNameBeforeChange()
+        {
+            // Do stuff here
+        }
+    }
+```
+the prevoius code will generate this:
+```csharp
+    public partial class HeaderControl
+    {
+        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(FirstName),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string),
+                                                                propertyChanged: __FirstNameChanged,
+                                                                propertyChanging: __FirstNameChanging);
+
+        public string FirstName
+        {
+            get => (string)GetValue(FirstNameProperty);
+            set => SetValue(FirstNameProperty, value);
+        }
+
+        ...
+
+        private static void __FirstNameChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (HeaderControl)bindable;
+            ctrl.UpdateDisplayNameBeforeChange();
+        }
+
+        ...
+    }
+```
+
+### Example 2 - Partial method
+Just decorate the field with the Bindable attribute.
+
+```csharp
+    using Maui.BindableProperty.Generator.Core;
+
+    public partial class HeaderControl : ContentView
+    {
+        [AutoBindable()]
+        private readonly string _firstName = string.Empty;
+
+        partial void OnFirstNameChanging(string value)
+        {
+            // Do stuff here
+        }
+    }
+```
+the prevoius code will generate this:
+```csharp
+    public partial class HeaderControl
+    {
+        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(FirstName),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string),
+                                                                propertyChanged: __FirstNameChanged,
+                                                                propertyChanging: __FirstNameChanging);
+
+        public string FirstName
+        {
+            get => (string)GetValue(FirstNameProperty);
+            set => SetValue(FirstNameProperty, value);
+        }
+
+        ...
+        
+        private static void __FirstNameChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (HeaderControl)bindable;
+            ctrl.OnFirstNameChanging((string)newValue);
+        }
+
+        partial void OnFirstNameChanging(string value);
+
+        ...
     }
 ```
 
@@ -235,17 +415,21 @@ the prevoius code will generate this:
     public partial class HeaderControl
     {
         public static readonly Microsoft.Maui.Controls.BindableProperty BirthDateProperty =
-                                    Microsoft.Maui.Controls.BindableProperty.Create(
-                                                            nameof(BirthDate),
-                                                            typeof(System.DateTime),
-                                                            typeof(HeaderControl),
-                                                            defaultValue: DateTime.Now);
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(BirthDate),
+                                                                typeof(DateTime?),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: DateTime.Now,
+                                                                propertyChanged: __BirthDateChanged,
+                                                                propertyChanging: __BirthDateChanging);
 
         public System.DateTime BirthDate
         {
             get => (System.DateTime)GetValue(BirthDateProperty);
             set => SetValue(BirthDateProperty, value);
         }
+        
+        ...
     }
 ```
 
@@ -266,17 +450,21 @@ the prevoius code will generate this:
     public partial class HeaderControl
     {
         public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty =
-                                    Microsoft.Maui.Controls.BindableProperty.Create(
-                                                            nameof(Country),
-                                                            typeof(string),
-                                                            typeof(HeaderControl),
-                                                            defaultValue: "USA");
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(Country),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: "USA",
+                                                                propertyChanged: __CountryChanged,
+                                                                propertyChanging: __CountryChanging);
 
         public string Country
         {
             get => (string)GetValue(CountryProperty);
             set => SetValue(CountryProperty, value);
         }
+
+        ...
     }
 ```
 
@@ -297,18 +485,22 @@ the prevoius code will generate this:
     public partial class HeaderControl
     {
         public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
-                                    Microsoft.Maui.Controls.BindableProperty.Create(
-                                                            nameof(FirstName),
-                                                            typeof(string),
-                                                            typeof(HeaderControl),
-                                                            defaultValue: default(string),
-                                                            defaultBindingMode: Microsoft.Maui.Controls.BindingMode.TwoWay);
+                                        Microsoft.Maui.Controls.BindableProperty.Create(
+                                                                nameof(FirstName),
+                                                                typeof(string),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: default(string),
+                                                                propertyChanged: __FirstNameChanged,
+                                                                propertyChanging: __FirstNameChanging,
+                                                                defaultBindingMode: Microsoft.Maui.Controls.BindingMode.TwoWay);
 
         public string FirstName
         {
             get => (string)GetValue(FirstNameProperty);
             set => SetValue(FirstNameProperty, value);
         }
+
+        ...
     }
 ```
 
@@ -320,8 +512,8 @@ Just decorate the field with the Bindable attribute and set "HidesUnderlyingProp
 
     public partial class HeaderControl : ContentView
     {
-        [AutoBindable(HidesUnderlyingProperty = true)]
-        private readonly Color _backgroundColor;
+        [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "Color.FromArgb(\"#cc3340\")")]
+        private readonly Color? _backgroundColor;
     }
 ```
 the prevoius code will generate this:
@@ -331,14 +523,19 @@ the prevoius code will generate this:
         public static new readonly Microsoft.Maui.Controls.BindableProperty BackgroundColorProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(BackgroundColor),
-                                                                typeof(Microsoft.Maui.Graphics.Color),
-                                                                typeof(HeaderControl));
+                                                                typeof(Color?),
+                                                                typeof(HeaderControl),
+                                                                defaultValue: Color.FromArgb("#cc3340"),
+                                                                propertyChanged: __BackgroundColorChanged,
+                                                                propertyChanging: __BackgroundColorChanging);
 
-        public new Microsoft.Maui.Graphics.Color BackgroundColor
+        public new Color? BackgroundColor
         {
-            get => (Microsoft.Maui.Graphics.Color)GetValue(BackgroundColorProperty);
+            get => (Color?)GetValue(BackgroundColorProperty);
             set => SetValue(BackgroundColorProperty, value);
         }
+
+        ...
     }
 ```
 
@@ -370,6 +567,9 @@ the prevoius code will generate this:
                                                                 nameof(Country),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
+                                                                defaultValue: default(string?),
+                                                                propertyChanged: __CountryChanged,
+                                                                propertyChanging: __CountryChanging,
                                                                 validateValue: __ValidateIsNullOrEmpty);
 
         public string? Country
@@ -383,6 +583,8 @@ the prevoius code will generate this:
             var ctrl = (HeaderControl)bindable;
             return ctrl.ValidateIsNullOrEmpty(ctrl, (string?)value);
         }
+
+        ...
     }
 ```
 ### Example 2 - Static Method
@@ -394,7 +596,7 @@ Just decorate the field with the Bindable attribute. The 'ValidateNotNull' metho
     public partial class HeaderControl : ContentView
     {
         [AutoBindable(ValidateValue = nameof(ValidateNotNull))]
-        private readonly string? _country;
+        private readonly string? _zipCode;
 
         private static bool ValidateNotNull(BindableObject _, object value) => value != null;
     }
@@ -403,19 +605,23 @@ the prevoius code will generate this:
 ```csharp
     public partial class HeaderControl
     {
-        public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty =
+        public static readonly Microsoft.Maui.Controls.BindableProperty ZipCodeProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
-                                                                nameof(Country),
+                                                                nameof(ZipCode),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
                                                                 defaultValue: default(string?),
+                                                                propertyChanged: __ZipCodeChanged,
+                                                                propertyChanging: __ZipCodeChanging,
                                                                 validateValue: ValidateNotNull);
 
-        public string? Country
+        public string? ZipCode
         {
-            get => (string?)GetValue(CountryProperty);
-            set => SetValue(CountryProperty, value);
+            get => (string?)GetValue(ZipCodeProperty);
+            set => SetValue(ZipCodeProperty, value);
         }
+        
+        ...
     }
 ```
 
@@ -440,13 +646,17 @@ the prevoius code will generate this:
                                                                 nameof(Age),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
-                                                                defaultValue: default(string?));
+                                                                defaultValue: default(string?),
+                                                                propertyChanged: __AgeChanged,
+                                                                propertyChanging: __AgeChanging);
 
         protected internal string? Age
         {
             get => (string?)GetValue(AgeProperty);
             set => SetValue(AgeProperty, value);
         }
+
+        ...
     }
 ```
 
@@ -469,6 +679,7 @@ the prevoius code will generate this:
 
 - ✅ `PropertyName` - Done
 - ✅ `OnChanged` - Done
+- ✅ `OnChanging` - Done
 - ✅ `DefaultValue` - Done
 - ✅ `DefaultBindingMode` - Done
 - ✅ `HidesUnderlyingProperty` - Done

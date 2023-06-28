@@ -6,16 +6,18 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
     public partial class HeaderControl
     {
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        /// <inheritdoc cref="_birthDate"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty BirthDateProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(BirthDate),
                                                                 typeof(DateTime?),
                                                                 typeof(HeaderControl),
                                                                 defaultValue: DateTime.Now,
-                                                                propertyChanged: __OnDateTimeChanged);
+                                                                propertyChanged: __BirthDateChanged,
+                                                                propertyChanging: __BirthDateChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public DateTime? BirthDate
         {
@@ -23,12 +25,25 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(BirthDateProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        private static void __OnDateTimeChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        private static void __BirthDateChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
-            ctrl.OnDateTimeChanged();
+            ctrl.OnBirthDateChanged((DateTime?)newValue);
         }
+
+        partial void OnBirthDateChanged(DateTime? value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __BirthDateChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnBirthDateChanging((DateTime?)oldValue);
+        }
+
+        partial void OnBirthDateChanging(DateTime? value);
+
     }
 }

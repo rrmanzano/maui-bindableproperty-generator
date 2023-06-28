@@ -6,21 +6,45 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
     public partial class HeaderControl
     {
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        /// <inheritdoc cref="_zipCode"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty ZipCodeProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(ZipCode),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
                                                                 defaultValue: default(string?),
+                                                                propertyChanged: __ZipCodeChanged,
+                                                                propertyChanging: __ZipCodeChanging,
                                                                 validateValue: ValidateNotNull);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? ZipCode
         {
             get => (string?)GetValue(ZipCodeProperty);
             set => SetValue(ZipCodeProperty, value);
         }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __ZipCodeChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnZipCodeChanged((string?)newValue);
+        }
+
+        partial void OnZipCodeChanged(string? value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __ZipCodeChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnZipCodeChanging((string?)oldValue);
+        }
+
+        partial void OnZipCodeChanging(string? value);
+
     }
 }

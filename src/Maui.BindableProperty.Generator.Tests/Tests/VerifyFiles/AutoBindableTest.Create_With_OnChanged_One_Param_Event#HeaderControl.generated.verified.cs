@@ -30,7 +30,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
-            ctrl.UpdateDisplayName();
+            ctrl.UpdateDisplayName((string)newValue);
         }
 
         [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]

@@ -53,6 +53,8 @@
 
                 public string? OnChanged { get; set; }
 
+                public string? OnChanging { get; set; }
+
                 public string? DefaultValue { get; set; }
 
                 public string? DefaultBindingMode { get; set; }

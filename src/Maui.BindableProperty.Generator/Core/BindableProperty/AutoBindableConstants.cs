@@ -36,6 +36,8 @@ public class AutoBindableConstants
 
     public const string AttrOnChanged = "OnChanged";
 
+    public const string AttrOnChanging = "OnChanging";
+
     public const string AttrDefaultValue = "DefaultValue";
 
     public const string AttrValidateValue = "ValidateValue";

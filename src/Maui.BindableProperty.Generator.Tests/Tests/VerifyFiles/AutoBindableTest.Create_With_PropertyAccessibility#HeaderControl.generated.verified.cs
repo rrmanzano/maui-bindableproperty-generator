@@ -6,20 +6,44 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
     public partial class HeaderControl
     {
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        /// <inheritdoc cref="_age"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         protected internal static readonly Microsoft.Maui.Controls.BindableProperty AgeProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(Age),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
-                                                                defaultValue: default(string?));
+                                                                defaultValue: default(string?),
+                                                                propertyChanged: __AgeChanged,
+                                                                propertyChanging: __AgeChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         protected internal string? Age
         {
             get => (string?)GetValue(AgeProperty);
             set => SetValue(AgeProperty, value);
         }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __AgeChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnAgeChanged((string?)newValue);
+        }
+
+        partial void OnAgeChanged(string? value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __AgeChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnAgeChanging((string?)oldValue);
+        }
+
+        partial void OnAgeChanging(string? value);
+
     }
 }

@@ -6,16 +6,18 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
     public partial class HeaderControl
     {
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        /// <inheritdoc cref="_firstName"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(FirstName),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
                                                                 defaultValue: default(string),
-                                                                propertyChanged: __UpdateDisplayName);
+                                                                propertyChanged: __FirstNameChanged,
+                                                                propertyChanging: __FirstNameChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string FirstName
         {
@@ -23,25 +25,37 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(FirstNameProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        private static void __UpdateDisplayName(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
             ctrl.UpdateDisplayName();
             ctrl.UpdateDisplayName((string)oldValue, (string)newValue);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __FirstNameChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnFirstNameChanging((string)oldValue);
+        }
+
+        partial void OnFirstNameChanging(string value);
+
+        /// <inheritdoc cref="_l"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty LastNameProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(LastName),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
                                                                 defaultValue: default(string?),
-                                                                propertyChanged: __UpdateDisplayName);
+                                                                propertyChanged: __LastNameChanged,
+                                                                propertyChanging: __LastNameChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? LastName
         {
@@ -49,16 +63,37 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(LastNameProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __LastNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.UpdateDisplayName();
+            ctrl.UpdateDisplayName((string?)oldValue, (string?)newValue);
+        }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __LastNameChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnLastNameChanging((string?)oldValue);
+        }
+
+        partial void OnLastNameChanging(string? value);
+
+        /// <inheritdoc cref="_birthDate"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty BirthDateProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(BirthDate),
                                                                 typeof(DateTime?),
                                                                 typeof(HeaderControl),
                                                                 defaultValue: DateTime.Now,
-                                                                propertyChanged: __OnDateTimeChanged);
+                                                                propertyChanged: __BirthDateChanged,
+                                                                propertyChanging: __BirthDateChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public DateTime? BirthDate
         {
@@ -66,24 +101,37 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(BirthDateProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        private static void __OnDateTimeChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        private static void __BirthDateChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
             ctrl.OnDateTimeChanged();
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __BirthDateChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnBirthDateChanging((DateTime?)oldValue);
+        }
+
+        partial void OnBirthDateChanging(DateTime? value);
+
+        /// <inheritdoc cref="_country"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(Country),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
                                                                 defaultValue: "USA",
+                                                                propertyChanged: __CountryChanged,
+                                                                propertyChanging: __CountryChanging,
                                                                 validateValue: __ValidateIsNullOrEmpty);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? Country
         {
@@ -91,7 +139,27 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(CountryProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __CountryChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnCountryChanged((string?)newValue);
+        }
+
+        partial void OnCountryChanged(string? value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __CountryChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnCountryChanging((string?)oldValue);
+        }
+
+        partial void OnCountryChanging(string? value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static bool __ValidateIsNullOrEmpty(Microsoft.Maui.Controls.BindableObject bindable, object value)
         {
@@ -99,16 +167,19 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             return ctrl.ValidateIsNullOrEmpty(ctrl, (string?)value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        /// <inheritdoc cref="_zipCode"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty ZipCodeProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(ZipCode),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
                                                                 defaultValue: default(string?),
+                                                                propertyChanged: __ZipCodeChanged,
+                                                                propertyChanging: __ZipCodeChanging,
                                                                 validateValue: ValidateNotNull);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? ZipCode
         {
@@ -116,15 +187,38 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(ZipCodeProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __ZipCodeChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnZipCodeChanged((string?)newValue);
+        }
+
+        partial void OnZipCodeChanged(string? value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __ZipCodeChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnZipCodeChanging((string?)oldValue);
+        }
+
+        partial void OnZipCodeChanging(string? value);
+
+        /// <inheritdoc cref="_displayName"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty DisplayNameProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(DisplayName),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
-                                                                defaultValue: default(string?));
+                                                                defaultValue: default(string?),
+                                                                propertyChanged: __DisplayNameChanged,
+                                                                propertyChanging: __DisplayNameChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? DisplayName
         {
@@ -132,15 +226,38 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(DisplayNameProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __DisplayNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnDisplayNameChanged((string?)newValue);
+        }
+
+        partial void OnDisplayNameChanged(string? value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __DisplayNameChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnDisplayNameChanging((string?)oldValue);
+        }
+
+        partial void OnDisplayNameChanging(string? value);
+
+        /// <inheritdoc cref="_age"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         protected internal static readonly Microsoft.Maui.Controls.BindableProperty AgeProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(Age),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
-                                                                defaultValue: default(string?));
+                                                                defaultValue: default(string?),
+                                                                propertyChanged: __AgeChanged,
+                                                                propertyChanging: __AgeChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         protected internal string? Age
         {
@@ -148,20 +265,64 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(AgeProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __AgeChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnAgeChanged((string?)newValue);
+        }
+
+        partial void OnAgeChanged(string? value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __AgeChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnAgeChanging((string?)oldValue);
+        }
+
+        partial void OnAgeChanging(string? value);
+
+        /// <inheritdoc cref="_backgroundColor"/>
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         public static new readonly Microsoft.Maui.Controls.BindableProperty BackgroundColorProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(BackgroundColor),
                                                                 typeof(Color),
                                                                 typeof(HeaderControl),
-                                                                defaultValue: Color.FromArgb("#cc3340"));
+                                                                defaultValue: Color.FromArgb("#cc3340"),
+                                                                propertyChanged: __BackgroundColorChanged,
+                                                                propertyChanging: __BackgroundColorChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.10.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public new Color BackgroundColor
         {
             get => (Color)GetValue(BackgroundColorProperty);
             set => SetValue(BackgroundColorProperty, value);
         }
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __BackgroundColorChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnBackgroundColorChanged((Color)newValue);
+        }
+
+        partial void OnBackgroundColorChanged(Color value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __BackgroundColorChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnBackgroundColorChanging((Color)oldValue);
+        }
+
+        partial void OnBackgroundColorChanging(Color value);
+
     }
 }

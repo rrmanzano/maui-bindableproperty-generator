@@ -6,42 +6,44 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 {
     public partial class HeaderControl
     {
-        /// <inheritdoc cref="_firstName"/>
+        /// <inheritdoc cref="_country"/>
         [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
-        public static readonly Microsoft.Maui.Controls.BindableProperty FirstNameProperty =
+        public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
-                                                                nameof(FirstName),
+                                                                nameof(Country),
                                                                 typeof(string),
                                                                 typeof(HeaderControl),
-                                                                defaultValue: default(string),
-                                                                propertyChanged: __FirstNameChanged,
-                                                                propertyChanging: __FirstNameChanging);
+                                                                defaultValue: "USA",
+                                                                propertyChanged: __CountryChanged,
+                                                                propertyChanging: __CountryChanging);
 
         [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        public string FirstName
+        public string Country
         {
-            get => (string)GetValue(FirstNameProperty);
-            set => SetValue(FirstNameProperty, value);
+            get => (string)GetValue(CountryProperty);
+            set => SetValue(CountryProperty, value);
         }
 
         [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
-        {
-            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
-            ctrl.UpdateDisplayName();
-        }
-
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
-        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
-        private static void __FirstNameChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        private static void __CountryChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
-            ctrl.OnFirstNameChanging((string)oldValue);
+            ctrl.OnCountryChanged((string)newValue);
         }
 
-        partial void OnFirstNameChanging(string value);
+        partial void OnCountryChanged(string value);
+
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+        private static void __CountryChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
+        {
+            var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
+            ctrl.OnCountryChanging((string)oldValue);
+        }
+
+        partial void OnCountryChanging(string value);
 
     }
 }

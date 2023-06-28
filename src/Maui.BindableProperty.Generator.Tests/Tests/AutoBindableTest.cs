@@ -22,7 +22,7 @@ public class AutoBindableTest
     {
         var definition = """
         [AutoBindable]
-        private readonly string _firstName = string.Empty;
+        private readonly string _placeholder = string.Empty;
         """;
 
         return Build(definition);
@@ -56,13 +56,13 @@ public class AutoBindableTest
     }
 
     [Fact]
-    public Task Create_With_DefaultValue()
+    public Task Create_With_OnChanged_One_Param_Event()
     {
         var definition = """
-        [AutoBindable(DefaultValue = "DateTime.Now", OnChanged = nameof(OnDateTimeChanged))]
-        private readonly DateTime? _birthDate;
+        [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
+        private readonly string _firstName = string.Empty;
 
-        private void OnDateTimeChanged()
+        private void UpdateDisplayName(string newValue)
         {
             // Do stuff here
         }
@@ -72,10 +72,149 @@ public class AutoBindableTest
     }
 
     [Fact]
+    public Task Create_With_OnChanged_Two_Params_Event()
+    {
+        var definition = """
+        [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
+        private readonly string _firstName = string.Empty;
+
+        private void UpdateDisplayName(string oldValue, string newValue)
+        {
+            // Do stuff here
+        }
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_OnChanging_Event()
+    {
+        var definition = """
+        [AutoBindable(OnChanging = nameof(UpdateDisplayNameBeforeChange))]
+        private readonly string _firstName = string.Empty;
+
+        private void UpdateDisplayNameBeforeChange()
+        {
+            // Do stuff here
+        }
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_OnChanging_Partial_Method_Event()
+    {
+        var definition = """
+        [AutoBindable()]
+        private readonly string _firstName = string.Empty;
+
+        partial void OnFirstNameChanging(string oldValue)
+        {
+            // Do stuff here
+        }
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_OnChanged_And_OnChanging_Event()
+    {
+        var definition = """
+        [AutoBindable(OnChanged = nameof(UpdateDisplayNameAfterChange), OnChanging = nameof(UpdateDisplayNameBeforeChange))]
+        private readonly string _firstName = string.Empty;
+
+        private void UpdateDisplayNameAfterChange(string newValue)
+        {
+            // Do stuff here
+        }
+
+        private void UpdateDisplayNameBeforeChange(string oldValue)
+        {
+            // Do stuff here
+        }
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_OnChanged_Partial_Method_Event()
+    {
+        var definition = """
+        [AutoBindable()]
+        private readonly string _firstName = string.Empty;
+
+        partial void OnFirstNameChanged(string value)
+        {
+            // Do stuff here
+        }
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_OnChanged_And_OnChanging_Partial_Method_Event()
+    {
+        var definition = """
+        [AutoBindable()]
+        private readonly string _firstName = string.Empty;
+
+        partial void OnChangedFirstName(string newValue)
+        {
+            // Do stuff here
+        }
+
+        partial void OnChangingFirstName(string oldValue)
+        {
+            // Do stuff here
+        }
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_Default_Binding_Mode()
+    {
+        var definition = """
+        [AutoBindable(DefaultBindingMode = nameof(BindingMode.TwoWay))]
+        private readonly string _firstName;
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_DefaultValue()
+    {
+        var definition = """
+        [AutoBindable(DefaultValue = "DateTime.Now")]
+        private readonly DateTime? _birthDate;
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_DefaultValue_As_String()
+    {
+        var definition = """
+        [AutoBindable(DefaultValue = "USA")]
+        private readonly string _country;
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
     public Task Create_With_ValidateValue()
     {
         var definition = """
-        [AutoBindable(DefaultValue = "USA", ValidateValue = nameof(ValidateIsNullOrEmpty))]
+        [AutoBindable(ValidateValue = nameof(ValidateIsNullOrEmpty))]
         private readonly string? _country;
 
         private bool ValidateIsNullOrEmpty(BindableObject _, string? value)
@@ -128,7 +267,7 @@ public class AutoBindableTest
     {
         var definition = """
         [AutoBindable(HidesUnderlyingProperty = true, DefaultValue = "Color.FromArgb(\"#cc3340\")")]
-        private readonly Color _backgroundColor = Color.FromArgb("#cc3340");
+        private readonly Color? _backgroundColor;
         """;
 
         return Build(definition);

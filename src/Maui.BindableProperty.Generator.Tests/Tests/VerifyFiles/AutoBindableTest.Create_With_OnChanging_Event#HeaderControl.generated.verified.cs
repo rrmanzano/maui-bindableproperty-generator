@@ -30,18 +30,17 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
-            ctrl.UpdateDisplayName();
+            ctrl.OnFirstNameChanged((string)newValue);
         }
+
+        partial void OnFirstNameChanged(string value);
 
         [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __FirstNameChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
-            ctrl.OnFirstNameChanging((string)oldValue);
+            ctrl.UpdateDisplayNameBeforeChange();
         }
-
-        partial void OnFirstNameChanging(string value);
-
     }
 }

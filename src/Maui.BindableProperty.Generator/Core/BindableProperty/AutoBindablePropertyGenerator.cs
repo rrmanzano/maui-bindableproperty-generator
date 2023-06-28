@@ -5,7 +5,7 @@ using Maui.BindableProperty.Generator.Helpers;
 using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation;
 using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation.Interfaces;
 using Microsoft.CodeAnalysis.CSharp;
-using System.Diagnostics;
+using Maui.BindableProperty.Generator.Core.BindableProperty.Implementation.PropertyChange;
 
 namespace Maui.BindableProperty.Generator.Core.BindableProperty;
 
@@ -74,6 +74,8 @@ public class AutoBindablePropertyGenerator : IncrementalGeneratorBase, IIncremen
                 public string PropertyName { get; set; } = string.Empty;
 
                 public string? OnChanged { get; set; }
+
+                public string? OnChanging { get; set; }
 
                 public string? DefaultValue { get; set; }
 
@@ -202,6 +204,7 @@ public class AutoBindablePropertyGenerator : IncrementalGeneratorBase, IIncremen
                         ? SyntaxFacts.GetText(classSymbol.DeclaredAccessibility)
                         : SyntaxFacts.GetText((Accessibility)propertyDeclaredAccessibility);
 
+        w._($"/// <inheritdoc cref=\"{fieldName}\"/>");
         w._(AttributeBuilder.GetAttrGeneratedCodeString());
         w._($@"{propertyAccessibility} static{hidesUnderlying} readonly {AutoBindableConstants.FullNameMauiControls}.BindableProperty {bindablePropertyName} =");
         w._($"{w.GetIndentString(6)}{AutoBindableConstants.FullNameMauiControls}.BindableProperty.Create(");

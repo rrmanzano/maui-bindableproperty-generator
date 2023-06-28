@@ -15,7 +15,8 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
                                                                 typeof(HeaderControl),
                                                                 defaultValue: default(string),
                                                                 propertyChanged: __FirstNameChanged,
-                                                                propertyChanging: __FirstNameChanging);
+                                                                propertyChanging: __FirstNameChanging,
+                                                                defaultBindingMode: Microsoft.Maui.Controls.BindingMode.TwoWay);
 
         [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
@@ -30,8 +31,10 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         private static void __FirstNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
             var ctrl = (global::Maui.BindableProperty.Generator.Demo.CustomControls.HeaderControl)bindable;
-            ctrl.UpdateDisplayName();
+            ctrl.OnFirstNameChanged((string)newValue);
         }
+
+        partial void OnFirstNameChanged(string value);
 
         [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]

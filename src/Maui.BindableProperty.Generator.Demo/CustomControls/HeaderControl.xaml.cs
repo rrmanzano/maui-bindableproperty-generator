@@ -17,6 +17,9 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
         [AutoBindable(OnChanged = nameof(UpdateDisplayName))]
         private readonly string _firstName = string.Empty;
 
+        [AutoBindable()]
+        private readonly string _placeholderName = string.Empty;
+
         [AutoBindable(PropertyName = "LastName", OnChanged = nameof(UpdateDisplayName))]
         private readonly string? _l;
 
@@ -85,13 +88,13 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             // This method never will fired becuse the parameter is a different type
         }
 
-        partial void OnDisplayNameChanging(string value)
+        partial void OnDisplayNameChanging(string? value)
         {
             System.Diagnostics.Debug.WriteLine("Method OnDisplayNameChanging fired");
             System.Diagnostics.Debug.WriteLine(value);
         }
 
-        partial void OnDisplayNameChanged(string value)
+        partial void OnDisplayNameChanged(string? value)
         {
             System.Diagnostics.Debug.WriteLine("Method OnDisplayNameChanged fired");
             System.Diagnostics.Debug.WriteLine(value);
