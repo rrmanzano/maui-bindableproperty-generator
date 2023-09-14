@@ -7,11 +7,13 @@ namespace Maui.BindableProperty.Generator.Core.BindableProperty.Implementation;
 public class DefaultValue : IImplementation
 {
     private TypedConstant DefaultValueProperty { get; set; }
+    private TypedConstant DefaultValueRawProperty { get; set; }
     private IFieldSymbol FieldSymbol { get; set; }
 
     public DefaultValue(IFieldSymbol fieldSymbol, ISymbol attributeSymbol)
     {
         this.DefaultValueProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrDefaultValue);
+        this.DefaultValueRawProperty = fieldSymbol.GetTypedConstant(attributeSymbol, AutoBindableConstants.AttrDefaultValueRaw);
         this.FieldSymbol = fieldSymbol;
     }
 
@@ -23,6 +25,18 @@ public class DefaultValue : IImplementation
     public string ProcessBindableParameters()
     {
         var fieldType = this.FieldSymbol.Type;
+
+        var hasRaw = false;
+        var defaultValueRaw = this.DefaultValueRawProperty.GetValue<string>(value =>
+        {
+            hasRaw = true;
+            return value;
+        });
+        if (hasRaw)
+        {
+            return defaultValueRaw != null ? $"defaultValue: {defaultValueRaw}" : $"defaultValue: default({fieldType.ToDisplayString(CommonSymbolDisplayFormat.DefaultFormat)})";
+        }
+
         var defaultValue = this.DefaultValueProperty.GetValue<string>(value =>
         {
             if (value != null)
