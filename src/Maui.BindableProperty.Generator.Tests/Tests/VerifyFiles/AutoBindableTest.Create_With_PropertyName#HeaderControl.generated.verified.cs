@@ -7,7 +7,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
     public partial class HeaderControl
     {
         /// <inheritdoc cref="_l"/>
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty LastNameProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(LastName),
@@ -17,7 +17,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
                                                                 propertyChanged: __LastNameChanged,
                                                                 propertyChanging: __LastNameChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string? LastName
         {
@@ -25,7 +25,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(LastNameProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __LastNameChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
@@ -35,7 +35,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 
         partial void OnLastNameChanged(string? value);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __LastNameChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
