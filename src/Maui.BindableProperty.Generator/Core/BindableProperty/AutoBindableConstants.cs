@@ -40,6 +40,8 @@ public class AutoBindableConstants
 
     public const string AttrDefaultValue = "DefaultValue";
 
+    public const string AttrDefaultValueRaw = "DefaultValueRaw";
+
     public const string AttrValidateValue = "ValidateValue";
 
     public const string AttrDefaultBindingMode = "DefaultBindingMode";

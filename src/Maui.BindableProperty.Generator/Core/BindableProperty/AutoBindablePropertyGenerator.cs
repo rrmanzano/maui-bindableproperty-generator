@@ -79,6 +79,8 @@ public class AutoBindablePropertyGenerator : IncrementalGeneratorBase, IIncremen
 
                 public string? DefaultValue { get; set; }
 
+                public string? DefaultValueRaw { get; set; }
+
                 public string? DefaultBindingMode { get; set; }
 
                 public string? ValidateValue { get; set; }

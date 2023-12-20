@@ -211,6 +211,32 @@ public class AutoBindableTest
     }
 
     [Fact]
+    public Task Create_With_DefaultValue_As_String_Code()
+    {
+        var definition = """
+        private static string MyDefaultValue = "my default value goes here";
+
+        [AutoBindable(DefaultValue = "\" + MyDefaultValue + \"")]
+        private readonly string _country;
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
+    public Task Create_With_DefaultValueRaw_As_String()
+    {
+        var definition = """
+        private static string MyDefaultValue = "my default value goes here";
+
+        [AutoBindable(DefaultValueRaw = "MyDefaultValue")]
+        private readonly string _country;
+        """;
+
+        return Build(definition);
+    }
+
+    [Fact]
     public Task Create_With_ValidateValue()
     {
         var definition = """
