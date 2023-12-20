@@ -7,7 +7,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
     public partial class HeaderControl
     {
         /// <inheritdoc cref="_country"/>
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty CountryProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(Country),
@@ -17,7 +17,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
                                                                 propertyChanged: __CountryChanged,
                                                                 propertyChanging: __CountryChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public string Country
         {
@@ -25,7 +25,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(CountryProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __CountryChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
@@ -35,7 +35,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 
         partial void OnCountryChanged(string value);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __CountryChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {

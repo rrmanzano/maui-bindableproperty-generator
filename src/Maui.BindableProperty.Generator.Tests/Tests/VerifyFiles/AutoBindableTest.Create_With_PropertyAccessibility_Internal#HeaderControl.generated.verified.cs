@@ -7,7 +7,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
     internal partial class HeaderControl
     {
         /// <inheritdoc cref="_age"/>
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         internal static readonly Microsoft.Maui.Controls.BindableProperty AgeProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(Age),
@@ -17,7 +17,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
                                                                 propertyChanged: __AgeChanged,
                                                                 propertyChanging: __AgeChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         internal string? Age
         {
@@ -25,7 +25,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(AgeProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __AgeChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
@@ -35,7 +35,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 
         partial void OnAgeChanged(string? value);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __AgeChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {

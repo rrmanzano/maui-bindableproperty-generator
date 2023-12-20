@@ -7,7 +7,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
     public partial class HeaderControl
     {
         /// <inheritdoc cref="_birthDate"/>
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         public static readonly Microsoft.Maui.Controls.BindableProperty BirthDateProperty =
                                         Microsoft.Maui.Controls.BindableProperty.Create(
                                                                 nameof(BirthDate),
@@ -17,7 +17,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
                                                                 propertyChanged: __BirthDateChanged,
                                                                 propertyChanging: __BirthDateChanging);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         public DateTime? BirthDate
         {
@@ -25,7 +25,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
             set => SetValue(BirthDateProperty, value);
         }
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __BirthDateChanged(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
@@ -35,7 +35,7 @@ namespace Maui.BindableProperty.Generator.Demo.CustomControls
 
         partial void OnBirthDateChanged(DateTime? value);
 
-        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.0.0")]
+        [global::System.CodeDom.Compiler.GeneratedCode("Maui.BindableProperty.Generator.Core.BindableProperty.AutoBindablePropertyGenerator", "0.11.1.0")]
         [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
         private static void __BirthDateChanging(Microsoft.Maui.Controls.BindableObject bindable, object oldValue, object newValue)
         {
